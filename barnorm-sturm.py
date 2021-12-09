@@ -445,11 +445,13 @@ for i in range(LEN_TRAJECTORY):
         polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         f0 += 1
-        if i < NUM_SYMB: print("0", end="")
+        if i < NUM_SYMB:
+            print("0", end="")
     else:
         x = x1
         f1 += 1
-        if i < NUM_SYMB: print("1", end="")
+        if i < NUM_SYMB:
+            print("1", end="")
 
 print("\n\nFreq_of_0 = %.3f," % round(f0/LEN_TRAJECTORY, 3),
       " freq_of_1 = %.3f" % round(f1/LEN_TRAJECTORY, 3))
