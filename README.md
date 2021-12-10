@@ -6,7 +6,9 @@
 - построения индексных последовательностей экстремальных траекторий,
 - вычисления частот появления каждой матрицы из матричного множества в соответствующих экстремальных траекториях.
 
-Для построения норм Барабанова применяется модифицированная реализации алгоритма max-релаксации, описанного в препринте [arXiv:1002.3251](https://arxiv.org/abs/1002.3251). Улучшение реализации алгоритма по сравнению с тестовым примером, описанным в [arXiv:1002.3251](https://arxiv.org/abs/1002.3251), достигается за счет применения средств работы с полигональными объектами (пакет ``shapely`` в языке Python, объект ``polyshape`` в MATLAB), что приводит к возможности итерационного построения полигональных приближений единичных сфер норм Барабанова без потери точности.
+Для построения норм Барабанова применяется модифицированная реализации алгоритма max-релаксации, описанного в препринте [arXiv:2112.00391
+](https://arxiv.org/abs/2112.00391). Улучшение реализации алгоритма по сравнению с тестовым примером, описанным в [arXiv:2112.00391
+](https://arxiv.org/abs/2112.00391), достигается за счет применения средств работы с полигональными объектами (пакет ``shapely`` в языке Python, объект ``polyshape`` в MATLAB), что приводит к возможности итерационного построения полигональных приближений единичных сфер норм Барабанова без потери точности.
 
 Основными в предлагаемом наборе скриптов являются 
 
@@ -48,7 +50,7 @@ Here are collected some scripts in the MATLAB and Python languages for construct
 
 - calculation of the frequency of occurrence of each matrix from the matrix set in the corresponding extreme trajectories.
 
-A modified implementation of the max-relaxation algorithm described in the preprint [arXiv: 1002.3251](https://arxiv.org/abs/1002.3251) is used to construct the Barabanov norms. An improvement in the implementation of the algorithm compared to the test case described in [arXiv: 1002.3251](https://arxiv.org/abs/1002.3251) is achieved by using tools for working with polygonal objects (the `shapely` package in Python, the `polyshape` object in MATLAB), which leads to the possibility of iteratively constructing polygonal approximations of unit spheres of the Barabanov norms without loss of accuracy. 
+A modified implementation of the max-relaxation algorithm described in the preprint [arXiv:2112.00391](https://arxiv.org/abs/2112.00391) is used to construct the Barabanov norms. An improvement in the implementation of the algorithm compared to the test case described in [arXiv:2112.00391](https://arxiv.org/abs/2112.00391) is achieved by using tools for working with polygonal objects (the `shapely` package in Python, the `polyshape` object in MATLAB), which leads to the possibility of iteratively constructing polygonal approximations of unit spheres of the Barabanov norms without loss of accuracy. 
 
 The main scripts of the proposed set of scripts are 
 
