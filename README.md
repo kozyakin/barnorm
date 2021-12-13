@@ -63,9 +63,9 @@ This script computes all the above characteristics. In the suggested version of 
 
 ### barnorm-sturm.py
 
-This script is a slight modification of the script **barnorm-rot.py**, which can be used to compute all of the above characteristics for sets of two matrices, one of which is nonnegative lower- triangular matrix and the other nonnegative upper- triangular matrix. This case is the most theoretically studied and for it it has been proved that the index sequences of the extreme trajectories are Sturmian. In addition to the computational functions described above for the **barnorm-rot.py** script, this script implements
+This script is a slight modification of the script **barnorm-rot.py**, which can be used to compute all of the above characteristics for sets of two matrices, one of which is nonnegative lower- triangular matrix and the other nonnegative upper-triangular matrix. This case is the most theoretically studied and for it it has been proved that the index sequences of the extreme trajectories are Sturmian. In addition to the computational functions described above for the **barnorm-rot.py** script, this script implements
 
-- a more convenient additional visualization of the corner function.
+- a more convenient additional visualization of the angular function.
 
 
 ### MATLAB-scripts 
