@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sat Nov 20 14:32:00 2021.
+Last updated on Thu Dec 21 10:38:00 2021.
 
 @author: Victor Kozyakin
 """
@@ -103,7 +103,7 @@ h0 = shapely.affinity.scale(h0, xfact=scale0, yfact=scale0)
 
 t_ini = time.time() - t_tick
 
-print("\n  #   rho_min    rho    rho_max  Num_edges\n")
+print('\n  #   rho_min    rho    rho_max  Num_edges\n')
 
 # Computation iterations
 
@@ -138,8 +138,8 @@ while True:
     t_Barnorm_comp += (time.time() - t_tick)
 
     niter += 1
-    print("%3.0f." % niter, "%.6f" % rho_min,
-          "%.6f" % rho, "%.6f" % rho_max, "   ",
+    print(f'{niter:3.0f}.', f'{rho_min:.6f}',
+          f'{rho:.6f}', f'{rho_max:.6f}', '   ',
           len(h0.boundary.coords) - 1)
     scale0 = 1 / max(h0.bounds[2], h0.bounds[3])
     h0 = shapely.affinity.scale(h0, xfact=scale0, yfact=scale0)
@@ -358,7 +358,7 @@ f0 = 0.
 f1 = 0.
 x = np.array([1, 1])
 
-print("\nExtremal index sequence: ", end="")
+print('\nExtremal index sequence: ', end='')
 for i in range(LEN_TRAJECTORY):
     x = x / polygonal_norm(x[0], x[1], h0)
     x0 = np.matmul(x, A0T)
@@ -368,25 +368,25 @@ for i in range(LEN_TRAJECTORY):
         x = x0
         f0 += 1
         if i < NUM_SYMB:
-            print("0", end="")
+            print('0', end='')
     else:
         x = x1
         f1 += 1
         if i < NUM_SYMB:
-            print("1", end="")
+            print('1', end='')
 
-print("\n\nFreq_of_0 = %.3f," % round(f0/LEN_TRAJECTORY, 3),
-      " freq_of_1 = %.3f" % round(f1/LEN_TRAJECTORY, 3))
+print(f'\n\nFreq_of_0 = {round(f0/LEN_TRAJECTORY, 3):.3f},',
+      f' freq_of_1 = {round(f1/LEN_TRAJECTORY, 3):.3f}')
 t_index_seq = time.time() - t_tick
 
 
 # Saving plots to pdf-files
 
 """
-fig.savefig('barnorm-%.2f-%.2f-%.2f.pdf'
-            % (THETA0, THETA1, LAMBDA), bbox_inches='tight')
-fig2.savefig('anglefun-%.2f-%.2f-%.2f.pdf'
-             % (THETA0, THETA1, LAMBDA), bbox_inches='tight')
+fig.savefig(f'barnorm-{THETA0:.2f}-{THETA1:.2f}-{LAMBDA:.2f}.pdf',
+            bbox_inches='tight')
+fig2.savefig(f'anglefun-{THETA0:.2f}-{THETA1:.2f}-{LAMBDA:.2f}.pdf',
+             bbox_inches='tight')
 """
 
 # Computation timing
@@ -394,10 +394,12 @@ fig2.savefig('anglefun-%.2f-%.2f-%.2f.pdf'
 t_total = (t_ini + t_plot_ang_fun + t_traj_plot + t_Barnorm_comp +
            t_index_seq)
 
-print("\n")
-print("Initialization:    %.6f sec." % round(t_ini, 6))
-print("Computations:      %.6f sec." % round(t_Barnorm_comp +
-                                             t_index_seq, 6))
-print("Plotting:          %.6f sec." % round(t_traj_plot +
-                                             t_plot_ang_fun, 6))
-print("Total:             %.6f sec." % round(t_total, 6))
+print('\n')
+print('Initialization:    ' +
+      f'{round(t_ini, 6):.6f} sec.')
+print('Computations:      ' +
+      f'{round(t_Barnorm_comp + t_index_seq, 6):.6f} sec.')
+print('Plotting:          ' +
+      f'{round(t_traj_plot + t_plot_ang_fun, 6):.6f} sec.')
+print('Total:             ' +
+      f'{round(t_total, 6):.6f} sec.')
