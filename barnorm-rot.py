@@ -395,11 +395,11 @@ t_total = (t_ini + t_plot_ang_fun + t_traj_plot + t_Barnorm_comp +
            t_index_seq)
 
 print('\n')
-print('Initialization:    ' +
-      f'{round(t_ini, 6):.6f} sec.')
-print('Computations:      ' +
-      f'{round(t_Barnorm_comp + t_index_seq, 6):.6f} sec.')
-print('Plotting:          ' +
-      f'{round(t_traj_plot + t_plot_ang_fun, 6):.6f} sec.')
-print('Total:             ' +
-      f'{round(t_total, 6):.6f} sec.')
+print('Initialization: ' +
+      f'{round(t_ini, 6):6.2f} sec.')
+print('Computations:   ' +
+      f'{round(t_Barnorm_comp + t_index_seq, 6):6.2f} sec.')
+print('Plotting:       ' +
+      f'{round(t_traj_plot + t_plot_ang_fun, 6):6.2f} sec.')
+print('Total:          ' +
+      f'{round(t_total, 6):6.2f} sec.')
