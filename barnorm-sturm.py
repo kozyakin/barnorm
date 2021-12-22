@@ -292,9 +292,9 @@ for i in range(arr_switch_N):
 t = np.arange(0., math.pi, ANGLE_STEP)
 angle_arr_A0 = np.empty(len(t))
 angle_arr_A1 = np.empty(len(t))
-for i in range(len(t)):
-    angle_arr_A0[i] = matrix_angular_coord(A0, t[i])
-    angle_arr_A1[i] = matrix_angular_coord(A1, t[i])
+for i, item in enumerate(t):
+    angle_arr_A0[i] = matrix_angular_coord(A0, item)
+    angle_arr_A1[i] = matrix_angular_coord(A1, item)
 
 ax1.plot(t, t, 'g--',
          t, angle_arr_A0, 'r--',
@@ -314,9 +314,9 @@ for j in range(arr_switch_N + 1):
     t = np.arange(arr_switches[j], arr_switches[j + 1], ANGLE_STEP)
     angle_arr_A0 = np.empty(len(t))
     angle_arr_A1 = np.empty(len(t))
-    for i in range(len(t)):
-        angle_arr_A0[i] = matrix_angular_coord(A0, t[i])
-        angle_arr_A1[i] = matrix_angular_coord(A1, t[i])
+    for i, item in enumerate(t):
+        angle_arr_A0[i] = matrix_angular_coord(A0, item)
+        angle_arr_A1[i] = matrix_angular_coord(A1, item)
     omega = (arr_switches[j] + arr_switches[j + 1]) / 2.
     x = np.array([math.cos(omega), math.sin(omega)])
     x0 = np.matmul(x, A0T)
@@ -375,9 +375,9 @@ for i in range(arr_switch_N):
 t = np.arange(0., math.pi/2, ANGLE_STEP)
 angle_arr_A0 = np.empty(len(t))
 angle_arr_A1 = np.empty(len(t))
-for i in range(len(t)):
-    angle_arr_A0[i] = matrix_angular_coord(A0, t[i])
-    angle_arr_A1[i] = matrix_angular_coord(A1, t[i])
+for i, item in enumerate(t):
+    angle_arr_A0[i] = matrix_angular_coord(A0, item)
+    angle_arr_A1[i] = matrix_angular_coord(A1, item)
 
 ax3.plot(t, t, 'g--',
          t, angle_arr_A0, 'r--',
@@ -398,9 +398,9 @@ for j in range(arr_switch_N + 1):
     t = np.arange(arr_switches[j], arr_switches[j + 1], ANGLE_STEP)
     angle_arr_A0 = np.empty(len(t))
     angle_arr_A1 = np.empty(len(t))
-    for i in range(len(t)):
-        angle_arr_A0[i] = matrix_angular_coord(A0, t[i])
-        angle_arr_A1[i] = matrix_angular_coord(A1, t[i])
+    for i, item in enumerate(t):
+        angle_arr_A0[i] = matrix_angular_coord(A0, item)
+        angle_arr_A1[i] = matrix_angular_coord(A1, item)
     omega = (arr_switches[j] + arr_switches[j + 1]) / 2.
     x = np.array([math.cos(omega), math.sin(omega)])
     x0 = np.matmul(x, A0T)
