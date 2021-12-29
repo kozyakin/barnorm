@@ -25,12 +25,12 @@ def polygonal_norm(_x, _y, _h):
     Returns:
         real: vector's norm
     """
-    _hb = np.asarray(_h.bounds)
+    _hb = _h.bounds
     _scale = 0.5 * math.sqrt(
         ((_hb[2] - _hb[0])**2 +
          (_hb[3] - _hb[1])**2) / (_x**2 + _y**2))
     _ll = LineString([(0, 0), (_scale*_x, _scale*_y)])
-    _h_int = np.asarray(_ll.intersection(_h).coords)
+    _h_int = _ll.intersection(_h).coords
     return math.sqrt(
         (_x**2 + _y**2) / (_h_int[1][0]**2 + _h_int[1][1]**2))
 
@@ -45,11 +45,11 @@ def min_max_norms_quotent(_g, _h):
     Returns:
         2x0-arrow: mimimum and maximum of g-norm/h-norm
     """
-    _pg = np.asarray(_g.boundary.coords)
+    _pg = _g.boundary.coords
     _dimg = len(_pg) - 1
     _sg = [1 / polygonal_norm(_pg[i][0], _pg[i][1], _h)
            for i in range(_dimg)]
-    _ph = np.asarray(_h.boundary.coords)
+    _ph = _h.boundary.coords
     _dimh = len(_ph) - 1
     _sh = [polygonal_norm(_ph[i][0], _ph[i][1], _g)
            for i in range(_dimh)]
@@ -111,7 +111,7 @@ niter = 0.
 while True:
     t_tick = time.time()
 
-    p0 = np.asarray(MultiPoint(np.asarray(h0.boundary.coords)))
+    p0 = np.asarray(MultiPoint(h0.boundary.coords))
 
     p1 = np.matmul(p0, INV_A0T)
     p1 = MultiPoint(p1)
@@ -122,7 +122,7 @@ while True:
     h2 = p2.convex_hull
 
     h12 = h1.intersection(h2)
-    p12 = np.asarray(h12.boundary.coords)
+    p12 = h12.boundary.coords
     p12 = MultiPoint(p12)
 
     rho_minmax = min_max_norms_quotent(h12, h0)
@@ -140,7 +140,7 @@ while True:
     niter += 1
     print(f'{niter:3.0f}.', f'{rho_min:.6f}',
           f'{rho:.6f}', f'{rho_max:.6f}', '   ',
-          len(np.asarray(h0.boundary.coords)) - 1)
+          len(h0.boundary.coords) - 1)
     scale0 = 1 / max(h0.bounds[2], h0.bounds[3])
     h0 = shapely.affinity.scale(h0, xfact=scale0, yfact=scale0)
 
