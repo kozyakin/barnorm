@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Thu Dec 21 10:38:00 2021.
+Last updated on Thu Dec 29 13:16:00 2021.
 
 @author: Victor Kozyakin
 """
@@ -25,14 +25,14 @@ def polygonal_norm(_x, _y, _h):
     Returns:
         real: vector's norm
     """
+    _hb = np.asarray(_h.bounds)
     _scale = 0.5 * math.sqrt(
-        ((_h.bounds[2] - _h.bounds[0])**2 +
-         (_h.bounds[3] - _h.bounds[1])**2) / (_x**2 + _y**2))
+        ((_hb[2] - _hb[0])**2 +
+         (_hb[3] - _hb[1])**2) / (_x**2 + _y**2))
     _ll = LineString([(0, 0), (_scale*_x, _scale*_y)])
-    _h_int = _ll.intersection(_h)
+    _h_int = np.asarray(_ll.intersection(_h))
     return math.sqrt(
-        (_x**2 + _y**2) / (_h_int.coords[1][0]**2 +
-                           _h_int.coords[1][1]**2))
+        (_x**2 + _y**2) / (_h_int[1][0]**2 + _h_int[1][1]**2))
 
 
 def min_max_norms_quotent(_g, _h):
@@ -45,11 +45,11 @@ def min_max_norms_quotent(_g, _h):
     Returns:
         2x0-arrow: mimimum and maximum of g-norm/h-norm
     """
-    _pg = _g.boundary.coords
+    _pg = np.asarray(_g.boundary)
     _dimg = len(_pg) - 1
     _sg = [1 / polygonal_norm(_pg[i][0], _pg[i][1], _h)
            for i in range(_dimg)]
-    _ph = _h.boundary.coords
+    _ph = np.asarray(_h.boundary)
     _dimh = len(_ph) - 1
     _sh = [polygonal_norm(_ph[i][0], _ph[i][1], _g)
            for i in range(_dimh)]
@@ -77,8 +77,8 @@ CCC = 1.
 DDD = 0.9
 
 
-A0 = ALPHA * np.array([[AAA, BBB],  [0., 1.]])
-A1 = BETA * np.array([[1., 0.],  [CCC, DDD]])
+A0 = ALPHA * np.asarray([[AAA, BBB],  [0., 1.]])
+A1 = BETA * np.asarray([[1., 0.],  [CCC, DDD]])
 A0T = np.transpose(A0)
 A1T = np.transpose(A1)
 
@@ -92,7 +92,7 @@ INV_A1 = np.linalg.inv(A1)
 INV_A0T = np.transpose(INV_A0)
 INV_A1T = np.transpose(INV_A1)
 
-p0 = np.array([[1, -1], [1, 1]])
+p0 = np.asarray([[1, -1], [1, 1]])
 p0 = np.concatenate((p0, -p0), axis=0)
 p0 = MultiPoint(p0)
 h0 = p0.convex_hull
@@ -110,7 +110,7 @@ niter = 0.
 while True:
     t_tick = time.time()
 
-    p0 = MultiPoint(h0.boundary.coords)
+    p0 = np.asarray(MultiPoint(np.asarray(h0.boundary)))
 
     p1 = np.matmul(p0, INV_A0T)
     p1 = MultiPoint(p1)
@@ -121,7 +121,7 @@ while True:
     h2 = p2.convex_hull
 
     h12 = h1.intersection(h2)
-    p12 = h12.boundary.coords
+    p12 = np.asarray(h12.boundary)
     p12 = MultiPoint(p12)
 
     rho_minmax = min_max_norms_quotent(h12, h0)
@@ -139,7 +139,7 @@ while True:
     niter += 1
     print(f'{niter:3.0f}.', f'{rho_min:.6f}',
           f'{rho:.6f}', f'{rho_max:.6f}', '   ',
-          len(h0.boundary.coords) - 1)
+          len(np.asarray(h0.boundary)) - 1)
     scale0 = 1 / max(h0.bounds[2], h0.bounds[3])
     h0 = shapely.affinity.scale(h0, xfact=scale0, yfact=scale0)
 
@@ -151,10 +151,10 @@ while True:
 t_tick = time.time()
 
 h10 = shapely.affinity.scale(h1, xfact=rho, yfact=rho)
-p10 = MultiPoint(h10.boundary.coords)
+p10 = np.asarray(MultiPoint(np.asarray(h10.boundary)))
 
 h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
-p20 = MultiPoint(h20.boundary.coords)
+p20 = np.asarray(MultiPoint(np.asarray(h20.boundary)))
 
 bb = max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
          h0.bounds[3], h10.bounds[3], h20.bounds[3])
@@ -179,15 +179,15 @@ ax.set_aspect(1)
 ax.tick_params(labelsize=16)
 ax.grid(True, linestyle=":")
 
-ax.plot(np.array(p10)[:, 0], np.array(p10)[:, 1], '--',
+ax.plot(p10[:, 0], p10[:, 1], '--',
         color='red', linewidth=1, label=r'$\|A_{0}x\|=\rho$')
 ax.legend()
 
-ax.plot(np.array(p20)[:, 0], np.array(p20)[:, 1], '--',
+ax.plot(p20[:, 0], p20[:, 1], '--',
         color='blue', linewidth=1, label=r'$\|A_{1}x\|=\rho$')
 ax.legend()
 
-ax.plot(np.array(p0)[:, 0], np.array(p0)[:, 1], '-',
+ax.plot(p0[:, 0], p0[:, 1], '-',
         color='black', label=r'$\|x\|=1$')
 ax.legend()
 
@@ -195,8 +195,8 @@ ax.legend()
 
 pl10 = LineString(p10)
 pl20 = LineString(p20)
-h_int = np.array(shapely.affinity.scale(pl10.intersection(pl20),
-                                        xfact=6, yfact=6))
+h_int = np.asarray(shapely.affinity.scale(pl10.intersection(pl20),
+                                          xfact=6, yfact=6))
 arr_switch_N = np.size(h_int[:, 0])
 arr_switch_ang = np.empty(arr_switch_N)
 for i in range(np.size(h_int[:, 0])):
@@ -223,7 +223,7 @@ arr_switch_N = np.size(arr_switch_ang)
 
 # Plotting extremal trajectory
 
-x = np.array([1, 1])
+x = np.asarray([1, 1])
 
 if rho > 1:
     x = (L_BOUND / polygonal_norm(x[0], x[1], h0)) * x
@@ -271,9 +271,9 @@ def matrix_angular_coord(_a, _t):
     """
     _cos_t = math.cos(_t)
     _sin_t = math.sin(_t)
-    _vec_t = np.array([_cos_t, _sin_t])
+    _vec_t = np.asarray([_cos_t, _sin_t])
     _vec_t_transpose = np.transpose(_vec_t)
-    _rot_back = np.array([[_cos_t, _sin_t],  [-_sin_t, _cos_t]])
+    _rot_back = np.asarray([[_cos_t, _sin_t],  [-_sin_t, _cos_t]])
     _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
@@ -318,7 +318,7 @@ for j in range(arr_switch_N + 1):
         angle_arr_A0[i] = matrix_angular_coord(A0, item)
         angle_arr_A1[i] = matrix_angular_coord(A1, item)
     omega = (arr_switches[j] + arr_switches[j + 1]) / 2.
-    x = np.array([math.cos(omega), math.sin(omega)])
+    x = np.asarray([math.cos(omega), math.sin(omega)])
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) <
@@ -402,7 +402,7 @@ for j in range(arr_switch_N + 1):
         angle_arr_A0[i] = matrix_angular_coord(A0, item)
         angle_arr_A1[i] = matrix_angular_coord(A1, item)
     omega = (arr_switches[j] + arr_switches[j + 1]) / 2.
-    x = np.array([math.cos(omega), math.sin(omega)])
+    x = np.asarray([math.cos(omega), math.sin(omega)])
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) <
@@ -434,7 +434,7 @@ t_tick = time.time()
 
 f0 = 0.
 f1 = 0.
-x = np.array([1, 1])
+x = np.asarray([1, 1])
 
 print('\nExtremal index sequence: ', end='')
 for i in range(LEN_TRAJECTORY):
