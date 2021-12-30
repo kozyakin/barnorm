@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Thu Dec 29 13:16:00 2021.
+Last updated on 30.12.2021 9:32:15 (UTC+0000).
 
 @author: Victor Kozyakin
 """
@@ -43,7 +43,7 @@ def min_max_norms_quotent(_g, _h):
         _h (MultiPoint): polygonal norm unit ball
 
     Returns:
-        2x0-arrow: mimimum and maximum of g-norm/h-norm
+        2x0-array: mimimum and maximum of g-norm/h-norm
     """
     _pg = _g.boundary.coords
     _dimg = len(_pg) - 1
@@ -112,17 +112,14 @@ while True:
 
     p0 = np.asarray(MultiPoint(h0.boundary.coords))
 
-    p1 = np.matmul(p0, INV_A0T)
-    p1 = MultiPoint(p1)
+    p1 = MultiPoint(np.matmul(p0, INV_A0T))
     h1 = p1.convex_hull
 
-    p2 = np.matmul(p0, INV_A1T)
-    p2 = MultiPoint(p2)
+    p2 = MultiPoint(np.matmul(p0, INV_A1T))
     h2 = p2.convex_hull
 
     h12 = h1.intersection(h2)
-    p12 = h12.boundary.coords
-    p12 = MultiPoint(p12)
+    p12 = MultiPoint(h12.boundary.coords)
 
     rho_minmax = min_max_norms_quotent(h12, h0)
     rho_max = rho_minmax[1]
@@ -151,10 +148,10 @@ while True:
 t_tick = time.time()
 
 h10 = shapely.affinity.scale(h1, xfact=rho, yfact=rho)
-p10 = np.asarray(MultiPoint(np.asarray(h10.boundary.coords)))
+p10 = np.asarray(MultiPoint(h10.boundary.coords))
 
 h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
-p20 = np.asarray(MultiPoint(np.asarray(h20.boundary.coords)))
+p20 = np.asarray(MultiPoint(h20.boundary.coords))
 
 bb = max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
          h0.bounds[3], h10.bounds[3], h20.bounds[3])
