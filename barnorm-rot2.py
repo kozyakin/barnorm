@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on 30.12.2021 16:00:03.
+Last updated on Mon Jan 3 14:39:32 2022.
 
 @author: Victor Kozyakin
 """
@@ -229,7 +229,7 @@ for i in range(LEN_TRAJECTORY):
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) >
-        polygonal_norm(x1[0], x1[1], h0)):
+            polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
                  head_width=0.03, head_length=0.07, linewidth=0.75,
@@ -316,7 +316,7 @@ for j in range(arr_switch_N + 1):
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) <
-        polygonal_norm(x1[0], x1[1], h0)):
+            polygonal_norm(x1[0], x1[1], h0)):
         ax1.plot(t, angle_arr_A1, 'b', linewidth=1.5)
         ax1.plot(t, angle_arr_A1 + math.pi, 'b', linewidth=1.5)
         ax1.plot(t, angle_arr_A1 - math.pi, 'b', linewidth=1.5)
@@ -357,7 +357,7 @@ for i in range(LEN_TRAJECTORY):
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) >
-        polygonal_norm(x1[0], x1[1], h0)):
+            polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         f0 += 1
         if i < NUM_SYMB:
