@@ -2,7 +2,7 @@
 
 Here are collected some scripts in the MATLAB and Python languages for constructing Barabanov norms of sets of 2x2 matrices and computing the associated characteristics:
 
-- joint/generalized spectral radius of a set of matrices, 
+- joint/generalized spectral radius of a set of matrices,
 
 - extreme trajectories -- trajectories on which the maximum growth rate of matrix products in the Barabanov norm is reached,
 
