@@ -7,6 +7,7 @@ Last updated on Mon Jan 3 14:39:32 2022.
 """
 import time
 import math
+import matplotlib
 from matplotlib import pyplot
 import numpy as np
 import shapely
@@ -156,16 +157,16 @@ p20 = np.asarray(MultiPoint(h20.boundary.coords))
 bb = max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
          h0.bounds[3], h10.bounds[3], h20.bounds[3])
 
-pyplot.rc('text', usetex=True)
-pyplot.rc('font', family='serif')
+matplotlib.rcParams['text.usetex'] = True
+matplotlib.rcParams['font.family'] = 'serif'
 
 # =================================================================
 # Tuning the LaTex preamble (e.g. for international support)
 #
-# pyplot.rcParams['text.latex.preamble'] = [
-#     r'\usepackage[utf8]{inputenc}',
-#     r'\usepackage[russian]{babel}',
-#     r'\usepackage{amsmath}']
+# matplotlib.rcParams['text.latex.preamble'] = \
+#     r'\usepackage[utf8]{inputenc}' + \
+#     r'\usepackage[russian]{babel}' + \
+#     r'\usepackage{amsmath}'
 # =================================================================
 
 fig = pyplot.figure(1, dpi=108)
