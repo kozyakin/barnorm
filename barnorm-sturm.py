@@ -163,8 +163,8 @@ pyplot.rc('font', family='serif')
 # Tuning the LaTex preamble (e.g. for international support)
 #
 # pyplot.rcParams['text.latex.preamble'] = \
-#     r'\usepackage[utf8]{inputenc}' + \
-#     r'\usepackage[russian]{babel}' + \
+#     r'\usepackage[utf8]{inputenc}' + '\n' + \
+#     r'\usepackage[russian]{babel}' + '\n' + \
 #     r'\usepackage{amsmath}'
 # =================================================================
 

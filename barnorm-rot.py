@@ -164,8 +164,8 @@ pyplot.rc('font', family='serif')
 # Tuning the LaTex preamble (e.g. for international support)
 #
 # pyplot.rcParams['text.latex.preamble'] = \
-#     r'\usepackage[utf8]{inputenc}' + \
-#     r'\usepackage[russian]{babel}' + \
+#     r'\usepackage[utf8]{inputenc}' + '\n' + \
+#     r'\usepackage[russian]{babel}' + '\n' + \
 #     r'\usepackage{amsmath}'
 # =================================================================
 
@@ -400,3 +400,4 @@ print('Plotting:       ' +
       f'{round(t_traj_plot + t_plot_ang_fun, 6):6.2f} sec.')
 print('Total:          ' +
       f'{round(t_total, 6):6.2f} sec.')
+
