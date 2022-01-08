@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Mon Jan 3 14:39:32 2022.
+Last updated on Fri Jan 7 19:57:09 2022 +0300.
 
 @author: Victor Kozyakin
 """
