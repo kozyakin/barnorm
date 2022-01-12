@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Fri Jan 7 19:56:57 2022 +0300.
+Last updated on Wed Jan 12 10:12:15 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -173,8 +173,8 @@ ax.set_aspect(1)
 ax.tick_params(labelsize=16)
 ax.grid(True, linestyle=":")
 
-ax.plot(p10[:, 0], p10[:, 1], '--',
-        color='red', linewidth=1, label=r'$\|A_{0}x\|=\rho$')
+ax.plot(p10[:, 0], p10[:, 1], ':',
+        color='red', linewidth=1.5, label=r'$\|A_{0}x\|=\rho$')
 ax.legend()
 
 ax.plot(p20[:, 0], p20[:, 1], '--',
@@ -329,7 +329,7 @@ for j in range(arr_switch_N + 1):
 
 xtick_pos = [0, arr_switches[1], 0.5 * np.pi, arr_switches[2],
              np.pi]
-xlabels = [r'0', r'$\omega_0$', r'$\frac{\pi}{2}$',
+xlabels = [r'0', r'$\omega_0$', '',
            r'$\omega_1$', r'$\pi$']
 
 ytick_pos = [0, 0.5 * np.pi, np.pi]
