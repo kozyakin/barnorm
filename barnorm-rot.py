@@ -60,7 +60,7 @@ def min_max_norms_quotent(_g, _h):
 
 
 t_tick = time.time()
-t_Barnorm_comp = 0.
+T_BARNORM_COMP = 0.
 
 TOL = 0.0000001
 ANGLE_STEP = 0.01
@@ -107,7 +107,7 @@ print('\n  #   rho_min    rho    rho_max  Num_edges\n')
 
 # Computation iterations
 
-niter = 0.
+NITER = 0.
 while True:
     t_tick = time.time()
 
@@ -132,10 +132,10 @@ while True:
     h0 = h0.intersection(shapely.affinity.scale(h12, xfact=rho,
                                                 yfact=rho))
 
-    t_Barnorm_comp += (time.time() - t_tick)
+    T_BARNORM_COMP += (time.time() - t_tick)
 
-    niter += 1
-    print(f'{niter:3.0f}.', f'{rho_min:.6f}',
+    NITER += 1
+    print(f'{NITER:3.0f}.', f'{rho_min:.6f}',
           f'{rho:.6f}', f'{rho_max:.6f}', '   ',
           len(h0.boundary.coords) - 1)
     scale0 = 1 / max(h0.bounds[2], h0.bounds[3])
@@ -211,12 +211,12 @@ ax.plot(np.NaN, np.NaN, '-', color='green', linewidth=0.25,
 ax.legend()
 
 arr_switch_ang.sort()
-isplit = 0
+ISPLIT = 0
 for i in range(np.size(arr_switch_ang)):
     if arr_switch_ang[i] < math.pi:
-        isplit = i
+        ISPLIT = i
 
-arr_switch_ang = np.resize(arr_switch_ang, isplit + 1)
+arr_switch_ang = np.resize(arr_switch_ang, ISPLIT + 1)
 arr_switch_N = np.size(arr_switch_ang)
 
 # Plotting extremal trajectory
@@ -351,8 +351,8 @@ pyplot.show()
 
 t_tick = time.time()
 
-f0 = 0.
-f1 = 0.
+F0 = 0.
+F1 = 0.
 x = np.asarray([1, 1])
 
 print('\nExtremal index sequence: ', end='')
@@ -363,17 +363,17 @@ for i in range(LEN_TRAJECTORY):
     if (polygonal_norm(x0[0], x0[1], h0) >
         polygonal_norm(x1[0], x1[1], h0)):
         x = x0
-        f0 += 1
+        F0 += 1
         if i < NUM_SYMB:
             print('0', end='')
     else:
         x = x1
-        f1 += 1
+        F1 += 1
         if i < NUM_SYMB:
             print('1', end='')
 
-print(f'\n\nFreq_of_0 = {round(f0/LEN_TRAJECTORY, 3):.3f},',
-      f' freq_of_1 = {round(f1/LEN_TRAJECTORY, 3):.3f}')
+print(f'\n\nFreq_of_0 = {round(F0/LEN_TRAJECTORY, 3):.3f},',
+      f' freq_of_1 = {round(F1/LEN_TRAJECTORY, 3):.3f}')
 t_index_seq = time.time() - t_tick
 
 
@@ -388,16 +388,15 @@ fig2.savefig(f'anglefun-{THETA0:.2f}-{THETA1:.2f}-' +
 
 # Computation timing
 
-t_total = (t_ini + t_plot_ang_fun + t_traj_plot + t_Barnorm_comp +
+t_total = (t_ini + t_plot_ang_fun + t_traj_plot + T_BARNORM_COMP +
            t_index_seq)
 
 print('\n')
 print('Initialization: ' +
       f'{round(t_ini, 6):6.2f} sec.')
 print('Computations:   ' +
-      f'{round(t_Barnorm_comp + t_index_seq, 6):6.2f} sec.')
+      f'{round(T_BARNORM_COMP + t_index_seq, 6):6.2f} sec.')
 print('Plotting:       ' +
       f'{round(t_traj_plot + t_plot_ang_fun, 6):6.2f} sec.')
 print('Total:          ' +
       f'{round(t_total, 6):6.2f} sec.')
-
