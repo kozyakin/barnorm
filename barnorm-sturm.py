@@ -201,12 +201,12 @@ for i in range(np.size(h_int[:, 0])):
     if arr_switch_ang[i] < 0:
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
     if h_int[i, 0] >= 0:
-        ax.plot([2. * h_int[i, 0], -2. * h_int[i, 0]],
-                [2. * h_int[i, 1], -2. * h_int[i, 1]],
-                '-', color='green', linewidth=0.25)
+        ax.plot([h_int[i, 0], -h_int[i, 0]],
+                [h_int[i, 1], -h_int[i, 1]], dashes=[10,5,2,5],
+                color='green', linewidth=0.5)
 
-ax.plot(np.NaN, np.NaN, '-', color='green', linewidth=0.25,
-        label=r'$\|A_{0}x\|=\|A_{1}x\|$')
+ax.plot(np.NaN, np.NaN, dashes=[10,5,2,5], color='green',
+        linewidth=0.5, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
 ax.legend()
 
 arr_switch_ang.sort()
