@@ -178,7 +178,7 @@ ax.tick_params(labelsize=16)
 ax.grid(True, linestyle=":")
 
 ax.plot(p10[:, 0], p10[:, 1], ':',
-        color='red', linewidth=1.5, label=r'$\|A_{0}x\|=\rho$')
+        color='red', linewidth=1.25, label=r'$\|A_{0}x\|=\rho$')
 ax.legend()
 
 ax.plot(p20[:, 0], p20[:, 1], '--',
@@ -202,12 +202,12 @@ for i in range(np.size(h_int[:, 0])):
     if arr_switch_ang[i] < 0:
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
     if h_int[i, 0] >= 0:
-        ax.plot([h_int[i, 0], -h_int[i, 0]],
-                [h_int[i, 1], -h_int[i, 1]], dashes=[10,5,2,5],
-                color='green', linewidth=0.5)
+        ax.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
+                [2 * h_int[i, 1], -2 *h_int[i, 1]],
+                dashes=[5,2,1,2], color='green', linewidth=1)
 
-ax.plot(np.NaN, np.NaN, dashes=[10,5,2,5], color='green',
-        linewidth=0.5, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
+ax.plot(np.NaN, np.NaN, dashes=[5,2,1,2], color='green',
+        linewidth=1, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
 ax.legend()
 
 arr_switch_ang.sort()
