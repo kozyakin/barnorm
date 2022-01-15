@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Wed Jan 12 10:12:15 2022 +0300.
+Last updated on Sat Jan 15 11:51:16 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -246,7 +246,6 @@ for i in range(LEN_TRAJECTORY):
 t_traj_plot = time.time() - t_tick
 pyplot.show()
 
-
 # Plotting the angle functions
 
 t_tick = time.time()
@@ -278,10 +277,6 @@ ax1.set_xlim(0., math.pi)
 ax1.set_ylim(0., math.pi)
 ax1.set_aspect(1)
 ax1.tick_params(labelsize=16)
-
-for i in range(arr_switch_N):
-    ax1.plot([arr_switch_ang[i], arr_switch_ang[i]], [0, math.pi],
-             '-', color="green", linewidth=0.5)
 
 t = np.arange(0., math.pi, ANGLE_STEP)
 angle_arr_A0 = np.empty(len(t))
@@ -342,7 +337,6 @@ pyplot.grid(linestyle=":")
 t_plot_ang_fun = time.time() - t_tick
 pyplot.show()
 
-
 # Calculating index sequence
 
 t_tick = time.time()
@@ -371,7 +365,6 @@ for i in range(LEN_TRAJECTORY):
 print(f'\n\nFreq_of_0 = {round(F0/LEN_TRAJECTORY, 3):.3f},',
       f' freq_of_1 = {round(F1/LEN_TRAJECTORY, 3):.3f}')
 t_index_seq = time.time() - t_tick
-
 
 # Saving plots to pdf-files
 

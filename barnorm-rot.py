@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Wed Jan 12 10:09:54 2022 +0300.
+Last updated on Sat Jan 15 11:51:26 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -79,7 +79,7 @@ LAMBDA = 0.75
 
 A0 = np.asarray([[COS_A0, -SIN_A0],  [SIN_A0, COS_A0]])
 A1 = np.asarray([[COS_A1, -LAMBDA * SIN_A1],
-               [(1 / LAMBDA) * SIN_A1, COS_A1]])
+                 [(1 / LAMBDA) * SIN_A1, COS_A1]])
 A0T = np.transpose(A0)
 A1T = np.transpose(A1)
 
@@ -233,7 +233,7 @@ for i in range(LEN_TRAJECTORY):
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) >
-        polygonal_norm(x1[0], x1[1], h0)):
+            polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
                  head_width=0.03, head_length=0.07, linewidth=0.75,
@@ -249,7 +249,6 @@ for i in range(LEN_TRAJECTORY):
 
 t_traj_plot = time.time() - t_tick
 pyplot.show()
-
 
 # Plotting the angle functions
 
@@ -282,10 +281,6 @@ ax1.set_xlim(0., math.pi)
 ax1.set_ylim(0., math.pi)
 ax1.set_aspect(1)
 ax1.tick_params(labelsize=16)
-
-for i in range(arr_switch_N):
-    ax1.plot([arr_switch_ang[i], arr_switch_ang[i]], [0, math.pi],
-             '-', color="green", linewidth=0.5)
 
 t = np.arange(0., math.pi, ANGLE_STEP)
 angle_arr_A0 = np.empty(len(t))
@@ -320,7 +315,7 @@ for j in range(arr_switch_N + 1):
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) <
-        polygonal_norm(x1[0], x1[1], h0)):
+            polygonal_norm(x1[0], x1[1], h0)):
         ax1.plot(t, angle_arr_A1, 'b', linewidth=1.5)
         ax1.plot(t, angle_arr_A1 + math.pi, 'b', linewidth=1.5)
         ax1.plot(t, angle_arr_A1 - math.pi, 'b', linewidth=1.5)
@@ -346,7 +341,6 @@ pyplot.grid(linestyle=":")
 t_plot_ang_fun = time.time() - t_tick
 pyplot.show()
 
-
 # Calculating index sequence
 
 t_tick = time.time()
@@ -361,7 +355,7 @@ for i in range(LEN_TRAJECTORY):
     x0 = np.matmul(x, A0T)
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) >
-        polygonal_norm(x1[0], x1[1], h0)):
+            polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         F0 += 1
         if i < NUM_SYMB:
@@ -375,7 +369,6 @@ for i in range(LEN_TRAJECTORY):
 print(f'\n\nFreq_of_0 = {round(F0/LEN_TRAJECTORY, 3):.3f},',
       f' freq_of_1 = {round(F1/LEN_TRAJECTORY, 3):.3f}')
 t_index_seq = time.time() - t_tick
-
 
 # Saving plots to pdf-files
 
