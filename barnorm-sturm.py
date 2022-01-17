@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sat Jan 15 11:50:50 2022 +0300.
+Last updated on Mon Jan 17 09:58:59 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -178,15 +178,10 @@ ax.grid(True, linestyle=":")
 
 ax.plot(p10[:, 0], p10[:, 1], ':',
         color='red', linewidth=1.25, label=r'$\|A_{0}x\|=\rho$')
-ax.legend()
-
 ax.plot(p20[:, 0], p20[:, 1], '--',
         color='blue', linewidth=1, label=r'$\|A_{1}x\|=\rho$')
-ax.legend()
-
 ax.plot(p0[:, 0], p0[:, 1], '-',
         color='black', label=r'$\|x\|=1$')
-ax.legend()
 
 # Plotting lines of intersection of norms' unit spheres
 
@@ -207,7 +202,6 @@ for i in range(np.size(h_int[:, 0])):
 
 ax.plot(np.NaN, np.NaN, dashes=[5,2,1,2], color='green',
         linewidth=1, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
-ax.legend()
 
 arr_switch_ang.sort()
 ISPLIT = 0
@@ -235,18 +229,21 @@ for i in range(LEN_TRAJECTORY):
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
-                 head_width=0.03, head_length=0.07, linewidth=0.75,
-                 color='red', length_includes_head=True)
+                 head_width=0.05, head_length=0.1, linewidth=0.75,
+                 color='red', length_includes_head=True,
+                 zorder=-i)
     else:
         x = x1
         ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
-                 head_width=0.03, head_length=0.07, linewidth=0.75,
-                 color='blue', length_includes_head=True)
+                 head_width=0.05, head_length=0.1, linewidth=0.75,
+                 color='blue', length_includes_head=True,
+                 zorder=-i)
     if ((polygonal_norm(x[0], x[1], h0) > U_BOUND) or
             (polygonal_norm(x[0], x[1], h0) < L_BOUND)):
         break
 
 t_traj_plot = time.time() - t_tick
+ax.legend()
 pyplot.show()
 
 # Plotting the angle functions

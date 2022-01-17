@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sat Jan 15 11:51:26 2022 +0300.
+Last updated on Mon Jan 17 09:53:51 2022 +0300.
 
 @author: Victor Kozyakin
 """
 import time
 import math
 from matplotlib import pyplot
+from matplotlib.ticker import MultipleLocator
 import numpy as np
 import shapely
 from shapely.geometry import LineString
@@ -66,8 +67,8 @@ TOL = 0.0000001
 ANGLE_STEP = 0.01
 LEN_TRAJECTORY = 10000
 NUM_SYMB = 50
-L_BOUND = 0.3
-U_BOUND = 2.
+L_BOUND = 1.3
+U_BOUND = 4.
 
 THETA0 = 0.7  # 0.4  # 0.6151 # one point of discontinuity
 THETA1 = 0.8
@@ -154,7 +155,7 @@ p10 = np.asarray(MultiPoint(h10.boundary.coords))
 h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
 p20 = np.asarray(MultiPoint(h20.boundary.coords))
 
-bb = 2. * max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
+bb = 3. * max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
               h0.bounds[3], h10.bounds[3], h20.bounds[3])
 
 pyplot.rc('text', usetex=True)
@@ -176,18 +177,15 @@ ax.set_ylim(-1.1*bb, 1.1*bb)
 ax.set_aspect(1)
 ax.tick_params(labelsize=16)
 ax.grid(True, linestyle=":")
+ax.xaxis.set_major_locator(MultipleLocator(2))
+ax.yaxis.set_major_locator(MultipleLocator(2))
 
 ax.plot(p10[:, 0], p10[:, 1], ':',
         color='red', linewidth=1.25, label=r'$\|A_{0}x\|=\rho$')
-ax.legend()
-
 ax.plot(p20[:, 0], p20[:, 1], '--',
         color='blue', linewidth=1, label=r'$\|A_{1}x\|=\rho$')
-ax.legend()
-
 ax.plot(p0[:, 0], p0[:, 1], '-',
         color='black', label=r'$\|x\|=1$')
-ax.legend()
 
 # Plotting lines of intersection of norms' unit spheres
 
@@ -208,7 +206,6 @@ for i in range(np.size(h_int[:, 0])):
 
 ax.plot(np.NaN, np.NaN, dashes=[5,2,1,2], color='green',
         linewidth=1, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
-ax.legend()
 
 arr_switch_ang.sort()
 ISPLIT = 0
@@ -236,18 +233,21 @@ for i in range(LEN_TRAJECTORY):
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
         ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
-                 head_width=0.03, head_length=0.07, linewidth=0.75,
-                 color='red', length_includes_head=True)
+                 head_width=0.04, head_length=0.08, linewidth=0.75,
+                 color='red', length_includes_head=True,
+                 zorder=-i)
     else:
         x = x1
         ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
-                 head_width=0.03, head_length=0.07, linewidth=0.75,
-                 color='blue', length_includes_head=True)
+                 head_width=0.04, head_length=0.08, linewidth=0.75,
+                 color='blue', length_includes_head=True,
+                 zorder=-i)
     if ((polygonal_norm(x[0], x[1], h0) > U_BOUND) or
             (polygonal_norm(x[0], x[1], h0) < L_BOUND)):
         break
 
 t_traj_plot = time.time() - t_tick
+ax.legend()
 pyplot.show()
 
 # Plotting the angle functions
