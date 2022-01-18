@@ -14,17 +14,17 @@ A modified implementation of the max-relaxation algorithm described in the prepr
 
 The main scripts of the proposed set of scripts are
 
-### barnorm-rot.py
+### barnorm-rot.py/barnorm_rot.py
 
-This script computes all the above characteristics. In the suggested version of the script, the defaults are made for matrices that are similar to the matrices of plane rotations. One can also use this script for other sets of matrices by simply redefining the matrix elements. In addition to the calculation functions described above, this script implements:
+These scripts compute all the above characteristics. In the suggested version of the scripts, the defaults are made for matrices that are similar to the matrices of plane rotations. One can also use this script for other sets of matrices by simply redefining the matrix elements. In addition to the calculation functions described above, this script implements:
 
 - the visualization of the unit sphere of the constructed Barabanov norm,
 - the visualization of an example of an extreme trajectory,
 - the visualization of the angular function associated with the process of constructing extreme trajectories.
 
-### barnorm-sturm.py
+### barnorm-sturm.py/barnorm_sturm.py
 
-This script is a slight modification of the script **barnorm-rot.py**, which can be used to compute all of the above characteristics for sets of two matrices, one of which is nonnegative lower-triangular matrix and the other nonnegative upper-triangular matrix. This case is the most theoretically studied and for it has been proved that the index sequences of the extreme trajectories are Sturmian. In addition to the computational functions described above for the **barnorm-rot.py** script, this script implements
+These scripts are a slight modification of the scripts **barnorm-rot.py** and **barnorm_rot.py**, respectively, which can be used to compute all of the above characteristics for sets of two matrices, one of which is nonnegative lower-triangular matrix and the other nonnegative upper-triangular matrix. This case is the most theoretically studied and for it has been proved that the index sequences of the extreme trajectories are Sturmian. In addition to the computational functions described above for the **barnorm-rot.py**  and **barnorm_rot.py** scripts, these scripts implement
 
 - a more convenient additional visualization of the angular function.
 
@@ -34,7 +34,7 @@ These are earlier versions of the scripts that are less detailed in terms of vis
 
 ### PDF-files
 
-These files contain examples of output files for the scripts **barnorm-rot.py** and **barnorm-sturm.py** for different parameter sets.
+These files contain examples of output files for the scripts **barnorm-rot.py**, **barnorm_rot.py**,  **barnorm-sturm.py**, and **barnorm_sturm.py** for different parameter sets.
 
 ---
 
@@ -49,17 +49,17 @@ These files contain examples of output files for the scripts **barnorm-rot.py** 
 
 Основными в предлагаемом наборе скриптов являются
 
-### barnorm-rot.py
+### barnorm-rot.py/barnorm_rot.py
 
-Этот скрипт осуществляет вычисление всех характеристик, упомянутых выше. В предлагаемом варианте скрипта предварительные настройки выполнены для матриц, подобных матрицам поворотов плоскости. Применение этого скрипта для анализа других наборов матриц может быть выполнено простым переопределением элементов матриц. Помимо вычислительных функций, описанных выше, данный скрипт осуществляет:
+Эти скрипты осуществляет вычисление всех характеристик, упомянутых выше. В предлагаемом варианте скрипта предварительные настройки выполнены для матриц, подобных матрицам поворотов плоскости. Применение этого скрипта для анализа других наборов матриц может быть выполнено простым переопределением элементов матриц. Помимо вычислительных функций, описанных выше, данный скрипт осуществляет:
 
 - визуализацию единичной сферы построенной нормы Барабанова,
 - визуализацию примера экстремальной траектории,
 - визуализацию угловой функции, связанной с процессом построения экстремальных траекторий.
 
-### barnorm-sturm.py
+### barnorm-sturm.py/barnorm_sturm.py
 
-Этот скрипт является незначительным изменением скрипта **barnorm-rot.py**, предназначенным для вычисления всех упомянутых выше характеристик для наборов из двух матриц, одна из которых является неотрицательной нижне-треугольной, а другая неотрицательной верхне-треугольной. Именно этот случай является наиболее теоретически исследованным и для него доказано, что индексные последовательности экстремальных траекторий штурмовы. Помимо вычислительных функций, описанных выше для скрипта **barnorm-rot.py**, данный скрипт осуществляет
+Эти скрипты являются незначительным изменением скриптов **barnorm-rot.py** и **barnorm_rot.py**, соответственно, предназначенным для вычисления всех упомянутых выше характеристик для наборов из двух матриц, одна из которых является неотрицательной нижне-треугольной, а другая неотрицательной верхне-треугольной. Именно этот случай является наиболее теоретически исследованным и для него доказано, что индексные последовательности экстремальных траекторий штурмовы. Помимо вычислительных функций, описанных выше для скриптов **barnorm-rot.py** и **barnorm_rot.py**, данные скрипты осуществляют
 
 - более удобную дополнительную визуализации угловой функции.
 
@@ -69,4 +69,4 @@ These files contain examples of output files for the scripts **barnorm-rot.py** 
 
 ### PDF-файлы
 
-В данных файлах представлены примеры работы скриптов **barnorm-rot.py** и **barnorm-sturm.py** для разных наборов параметров.
+В данных файлах представлены примеры работы скриптов **barnorm-rot.py**, **barnorm_rot.py**,  **barnorm-sturm.py** и **barnorm_sturm.py** для разных наборов параметров.
