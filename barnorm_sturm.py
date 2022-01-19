@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
+"""Barabanov norms for positive triangular matrices.
+
 Created on Sat Sep 21 12:37:46 2019.
 Last updated on Mon Jan 17 18:50:16 2022 +0300.
 
@@ -59,8 +60,7 @@ def min_max_norms_quotent(_g, _h):
 
 
 def matrix_angular_coord(_a, _t):
-    """Calculation of angular coordinate for vector Ax, given
-    angular coordinate of vector x
+    """Calculate the angular coordinate of vector Ax given vector x.
 
     Args:
         _a (2x2 np.array): input matrix A
@@ -308,29 +308,29 @@ if (polygonal_norm(p_label[0], p_label[1], h10) >
         polygonal_norm(p_label[0], p_label[1], h20)):
     ax2.text(0.9 * bb * math.cos(omega1),
              0.9 * bb * math.sin(omega1), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
     ax2.text(0.7 * bb * math.cos(omega2),
              0.7 * bb * math.sin(omega2), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
     ax2.text(0.9 * bb * math.cos(omega3),
              0.9 * bb * math.sin(omega3), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
     ax2.text(0.7 * bb * math.cos(omega4),
              0.7 * bb * math.sin(omega4), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
 else:
     ax2.text(0.7 * bb * math.cos(omega1),
              0.7 * bb * math.sin(omega1), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
     ax2.text(0.9 * bb * math.cos(omega2),
              0.9 * bb * math.sin(omega2), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
     ax2.text(0.7 * bb * math.cos(omega3),
              0.7 * bb * math.sin(omega3), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
     ax2.text(0.9 * bb * math.cos(omega4),
              0.9 * bb * math.sin(omega4), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize = 'x-large', bbox=props)
+             ha='center', va='center', fontsize='x-large', bbox=props)
 
 t_plot_fig2 = time.time() - t_tick
 pyplot.show()

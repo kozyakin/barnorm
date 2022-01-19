@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
+"""Barabanov norms for positive triangular matrices.
+
 Created on Sat Sep 21 12:37:46 2019.
 Last updated on Mon Jan 17 09:58:59 2022 +0300.
 
@@ -197,10 +198,10 @@ for i in range(np.size(h_int[:, 0])):
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
     if h_int[i, 0] >= 0:
         ax.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
-                [2 * h_int[i, 1], -2 *h_int[i, 1]],
-                dashes=[5,2,1,2], color='green', linewidth=1)
+                [2 * h_int[i, 1], -2 * h_int[i, 1]],
+                dashes=[5, 2, 1, 2], color='green', linewidth=1)
 
-ax.plot(np.NaN, np.NaN, dashes=[5,2,1,2], color='green',
+ax.plot(np.NaN, np.NaN, dashes=[5, 2, 1, 2], color='green',
         linewidth=1, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
 
 arr_switch_ang.sort()
@@ -252,8 +253,7 @@ t_tick = time.time()
 
 
 def matrix_angular_coord(_a, _t):
-    """Calculation of angular coordinate for vector Ax, given
-    angular coordinate of vector x
+    """Calculate the angular coordinate of vector Ax given vector x.
 
     Args:
         _a (2x2 np.array): input matrix A
