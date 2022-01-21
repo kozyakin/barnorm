@@ -2,13 +2,14 @@
 """Barabanov norms.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Mon Jan 17 09:54:12 2022 +0300.
+Last updated on Mon Jan 17 18:50:05 2022 +0300.
 
 @author: Victor Kozyakin
 """
 import time
 import math
 from matplotlib import pyplot
+from matplotlib.ticker import MultipleLocator
 import numpy as np
 import shapely
 from shapely.geometry import LineString
@@ -57,8 +58,26 @@ def min_max_norms_quotent(_g, _h):
     _sgh = _sg + _sh
     return (min(_sgh), max(_sgh))
 
-# Initialization
+def matrix_angular_coord(_a, _t):
+    """Calculate the angular coordinate of vector Ax given vector x.
 
+    Args:
+        _a (2x2 np.array): input matrix A
+        _t (nx1 np.array): array of input angles of x's
+
+    Returns:
+        [nx1 np.array]: array of output angles of Ax's
+    """
+    _cos_t = math.cos(_t)
+    _sin_t = math.sin(_t)
+    _vec_t = np.asarray([_cos_t, _sin_t])
+    _vec_t_transpose = np.transpose(_vec_t)
+    _rot_back = np.asarray([[_cos_t, _sin_t],  [-_sin_t, _cos_t]])
+    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
+    return _t + math.atan2(_vec_a[1], _vec_a[0])
+
+
+# Initialization
 
 t_tick = time.time()
 T_BARNORM_COMP = 0.
@@ -124,7 +143,6 @@ while True:
     rho_min = rho_minmax[0]
 
     rho = (rho_max + rho_min) / 2
-    # rho = math.sqrt(rho_max * rho_min)
 
     h0 = h0.intersection(shapely.affinity.scale(h12, xfact=rho,
                                                 yfact=rho))
@@ -151,7 +169,7 @@ p10 = np.asarray(MultiPoint(h10.boundary.coords))
 h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
 p20 = np.asarray(MultiPoint(h20.boundary.coords))
 
-bb = 2. * max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
+bb = 1.7 * max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
               h0.bounds[3], h10.bounds[3], h20.bounds[3])
 
 pyplot.rc('text', usetex=True)
@@ -166,20 +184,21 @@ pyplot.rc('font', family='serif')
 #     r'\usepackage{amsmath}'
 # =================================================================
 
-fig = pyplot.figure(1, dpi=108)
-ax = fig.add_subplot(111)
-ax.set_xlim(-1.1*bb, 1.1*bb)
-ax.set_ylim(-1.1*bb, 1.1*bb)
-ax.set_aspect(1)
-ax.tick_params(labelsize=16)
-ax.grid(True, linestyle=":")
+# Plotting Barabanov's norm
 
-ax.plot(p10[:, 0], p10[:, 1], ':',
-        color='red', linewidth=1.25, label=r'$\|A_{0}x\|=\rho$')
-ax.plot(p20[:, 0], p20[:, 1], '--',
-        color='blue', linewidth=1, label=r'$\|A_{1}x\|=\rho$')
-ax.plot(p0[:, 0], p0[:, 1], '-',
-        color='black', label=r'$\|x\|=1$')
+fig1 = pyplot.figure(1, dpi=108)
+ax1 = fig1.add_subplot(111)
+ax1.set_xlim(-1.1*bb, 1.1*bb)
+ax1.set_ylim(-1.1*bb, 1.1*bb)
+ax1.set_aspect(1)
+ax1.tick_params(labelsize=16)
+ax1.grid(True, linestyle=":")
+ax1.xaxis.set_major_locator(MultipleLocator(1))
+ax1.yaxis.set_major_locator(MultipleLocator(1))
+
+ax1.plot(p10[:, 0], p10[:, 1], ':', color='red', linewidth=1.25)
+ax1.plot(p20[:, 0], p20[:, 1], '--', color='blue', linewidth=1)
+ax1.plot(p0[:, 0], p0[:, 1], '-', color='black')
 
 # Plotting lines of intersection of norms' unit spheres
 
@@ -194,23 +213,43 @@ for i in range(np.size(h_int[:, 0])):
     if arr_switch_ang[i] < 0:
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
     if h_int[i, 0] >= 0:
-        ax.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
+        ax1.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
                 [2 * h_int[i, 1], -2 * h_int[i, 1]],
                 dashes=[5, 2, 1, 2], color='green', linewidth=1)
 
-ax.plot(np.NaN, np.NaN, dashes=[5, 2, 1, 2], color='green',
-        linewidth=1, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
+t_plot_fig1 = time.time() - t_tick
+pyplot.show()
 
-arr_switch_ang.sort()
-ISPLIT = 0
-for i in range(np.size(arr_switch_ang)):
-    if arr_switch_ang[i] < math.pi:
-        ISPLIT = i
 
-arr_switch_ang = np.resize(arr_switch_ang, ISPLIT + 1)
-arr_switch_N = np.size(arr_switch_ang)
+# Plotting an extremal trajectory
 
-# Plotting extremal trajectory
+t_tick = time.time()
+
+fig2 = pyplot.figure(1, dpi=108)
+ax2 = fig2.add_subplot(111)
+ax2.set_xlim(-1.1*bb, 1.1*bb)
+ax2.set_ylim(-1.1*bb, 1.1*bb)
+ax2.set_aspect(1)
+ax2.tick_params(labelsize=16)
+ax2.grid(True, linestyle=":")
+ax2.xaxis.set_major_locator(MultipleLocator(1))
+ax2.yaxis.set_major_locator(MultipleLocator(1))
+
+# Plotting lines of intersection of norms' unit spheres
+
+arr_switch_N = np.size(h_int[:, 0])
+arr_switch_ang = np.empty(arr_switch_N)
+for i in range(np.size(h_int[:, 0])):
+    arr_switch_ang[i] = math.atan2(h_int[i, 1], h_int[i, 0])
+    if arr_switch_ang[i] < 0:
+        arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
+    if h_int[i, 0] >= 0:
+        ax2.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
+                 [2 * h_int[i, 1], -2 * h_int[i, 1]],
+                 dashes=[5, 2, 1, 2], color='green', linewidth=1)
+
+
+# Plotting the trajectory
 
 x = np.asarray([1, 1])
 
@@ -226,54 +265,79 @@ for i in range(LEN_TRAJECTORY):
     if (polygonal_norm(x0[0], x0[1], h0) >
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
-        ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
-                 head_width=0.03, head_length=0.07, linewidth=0.75,
+        ax2.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
+                  head_width=0.04, head_length=0.08, linewidth=0.75,
                  color='red', length_includes_head=True,
                  zorder=-i)
     else:
         x = x1
-        ax.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
-                 head_width=0.03, head_length=0.07, linewidth=0.75,
+        ax2.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
+                  head_width=0.04, head_length=0.08, linewidth=0.75,
                  color='blue', length_includes_head=True,
                  zorder=-i)
     if ((polygonal_norm(x[0], x[1], h0) > U_BOUND) or
             (polygonal_norm(x[0], x[1], h0) < L_BOUND)):
         break
 
-t_traj_plot = time.time() - t_tick
-ax.legend()
+arr_switch_ang.sort()
+ISPLIT = 0
+for i in range(np.size(arr_switch_ang)):
+    if arr_switch_ang[i] < math.pi:
+        ISPLIT = i
+
+arr_switch_ang = np.resize(arr_switch_ang, ISPLIT + 1)
+arr_switch_N = np.size(arr_switch_ang)
+arr_switches = np.insert(arr_switch_ang, 0, 0)
+arr_switches = np.append(arr_switches, math.pi)
+omega1 = (arr_switches[1] + arr_switches[2])/2.
+omega2 = omega1 + math.pi/2.
+omega3 = omega2 + math.pi/2.
+omega4 = omega3 + math.pi/2.
+props = dict(boxstyle='round', facecolor='gainsboro',
+             edgecolor='none', alpha=0.5)
+p_label = np.array([math.cos(omega1), math.sin(omega1)])
+
+if (polygonal_norm(p_label[0], p_label[1], h10) >
+        polygonal_norm(p_label[0], p_label[1], h20)):
+    ax2.text(0.9 * bb * math.cos(omega1),
+             0.9 * bb * math.sin(omega1), r'$x_{n+1}=A_0x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega2),
+             0.8 * bb * math.sin(omega2), r'$x_{n+1}=A_1x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega3),
+             0.9 * bb * math.sin(omega3), r'$x_{n+1}=A_0x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega4),
+             0.8 * bb * math.sin(omega4), r'$x_{n+1}=A_1x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+else:
+    ax2.text(0.8 * bb * math.cos(omega1),
+             0.8 * bb * math.sin(omega1), r'$x_{n+1}=A_1x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega2),
+             0.9 * bb * math.sin(omega2), r'$x_{n+1}=A_0x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega3),
+             0.8 * bb * math.sin(omega3), r'$x_{n+1}=A_1x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega4),
+             0.9 * bb * math.sin(omega4), r'$x_{n+1}=A_0x_n$',
+             ha='center', va='center', fontsize='x-large', bbox=props)
+
+t_plot_fig2 = time.time() - t_tick
 pyplot.show()
 
 # Plotting the angle functions
 
 t_tick = time.time()
 
-
-def matrix_angular_coord(_a, _t):
-    """Calculate the angular coordinate of vector Ax given vector x.
-
-    Args:
-        _a (2x2 np.array): input matrix A
-        _t (nx1 np.array): array of input angles of x's
-
-    Returns:
-        [nx1 np.array]: array of output angles of Ax's
-    """
-    _cos_t = math.cos(_t)
-    _sin_t = math.sin(_t)
-    _vec_t = np.asarray([_cos_t, _sin_t])
-    _vec_t_transpose = np.transpose(_vec_t)
-    _rot_back = np.asarray([[_cos_t, _sin_t],  [-_sin_t, _cos_t]])
-    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
-    return _t + math.atan2(_vec_a[1], _vec_a[0])
-
-
-fig2 = pyplot.figure(2, dpi=108)
-ax1 = fig2.add_subplot(111)
-ax1.set_xlim(0., math.pi)
-ax1.set_ylim(0., math.pi)
-ax1.set_aspect(1)
-ax1.tick_params(labelsize=16)
+fig3 = pyplot.figure(2, dpi=108)
+ax3 = fig3.add_subplot(111)
+ax3.set_xlim(0., math.pi)
+ax3.set_ylim(0., math.pi)
+ax3.set_aspect(1)
+ax3.tick_params(labelsize=16)
 
 t = np.arange(0., math.pi, ANGLE_STEP)
 angle_arr_A0 = np.empty(len(t))
@@ -282,19 +346,15 @@ for i, item in enumerate(t):
     angle_arr_A0[i] = matrix_angular_coord(A0, item)
     angle_arr_A1[i] = matrix_angular_coord(A1, item)
 
-ax1.plot(t, t, 'g--',
-         t, angle_arr_A0, 'r--',
+ax3.plot(t, angle_arr_A0, 'r--',
          t, angle_arr_A1, 'b--', linewidth=0.15)
-ax1.plot(t, angle_arr_A0 + math.pi, 'r--',
+ax3.plot(t, angle_arr_A0 + math.pi, 'r--',
          t, angle_arr_A1 + math.pi, 'b--', linewidth=0.15)
-ax1.plot(t, angle_arr_A0 - math.pi, 'r--',
+ax3.plot(t, angle_arr_A0 - math.pi, 'r--',
          t, angle_arr_A1 - math.pi, 'b--', linewidth=0.15)
 
 # Plotting the angle function delivering
 # the maximal growth rate of iterations
-
-arr_switches = np.insert(arr_switch_ang, 0, 0)
-arr_switches = np.append(arr_switches, math.pi)
 
 for j in range(arr_switch_N + 1):
     t = np.arange(arr_switches[j], arr_switches[j + 1], ANGLE_STEP)
@@ -309,21 +369,18 @@ for j in range(arr_switch_N + 1):
     x1 = np.matmul(x, A1T)
     if (polygonal_norm(x0[0], x0[1], h0) <
             polygonal_norm(x1[0], x1[1], h0)):
-        ax1.plot(t, angle_arr_A1, 'b', linewidth=1.5)
-        ax1.plot(t, angle_arr_A1 + math.pi, 'b', linewidth=1.5)
-        ax1.plot(t, angle_arr_A1 - math.pi, 'b', linewidth=1.5)
+        ax3.plot(t, angle_arr_A1, 'b', linewidth=1.5)
+        ax3.plot(t, angle_arr_A1 + math.pi, 'b', linewidth=1.5)
+        ax3.plot(t, angle_arr_A1 - math.pi, 'b', linewidth=1.5)
     else:
-        ax1.plot(t, angle_arr_A0, 'r', linewidth=1.5)
-        ax1.plot(t, angle_arr_A0 + math.pi, 'r', linewidth=1.5)
-        ax1.plot(t, angle_arr_A0 - math.pi, 'r', linewidth=1.5)
+        ax3.plot(t, angle_arr_A0, 'r', linewidth=1.5)
+        ax3.plot(t, angle_arr_A0 + math.pi, 'r', linewidth=1.5)
+        ax3.plot(t, angle_arr_A0 - math.pi, 'r', linewidth=1.5)
 
-# Put Pi-ticks on axes
+# Putting Pi-ticks on axes
 
-xtick_pos = [0, arr_switches[1], 0.5 * np.pi, arr_switches[2],
-             np.pi]
-xlabels = [r'0', r'$\omega_0$', '',
-           r'$\omega_1$', r'$\pi$']
-
+xtick_pos = [0, arr_switches[1], 0.5 * np.pi, arr_switches[2], np.pi]
+xlabels = [r'0', r'$\omega_0$', '', r'$\omega_1$', r'$\pi$']
 ytick_pos = [0, 0.5 * np.pi, np.pi]
 ylabels = [r'0', r'$\frac{\pi}{2}$', r'$\pi$']
 
@@ -331,7 +388,7 @@ pyplot.xticks(xtick_pos, xlabels)
 pyplot.yticks(ytick_pos, ylabels)
 pyplot.grid(linestyle=":")
 
-t_plot_ang_fun = time.time() - t_tick
+t_plot_fig3 = time.time() - t_tick
 pyplot.show()
 
 # Calculating index sequence
@@ -366,16 +423,17 @@ t_index_seq = time.time() - t_tick
 # Saving plots to pdf-files
 
 """
-fig.savefig(f'barnorm-{THETA0:.2f}-{THETA1:.2f}.pdf',
+fig.savefig(f'bnorm-{THETA0:.2f}-{THETA1:.2f}.pdf',
             bbox_inches='tight')
-fig2.savefig(f'anglefun-{THETA0:.2f}-{THETA1:.2f}.pdf',
+fig2.savefig(f'sfunc-{THETA0:.2f}-{THETA1:.2f}.pdf',
              bbox_inches='tight')
 """
 
 # Computation timing
 
-t_total = (t_ini + t_plot_ang_fun + t_traj_plot + T_BARNORM_COMP +
-           t_index_seq)
+t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 +
+           T_BARNORM_COMP + t_index_seq)
+t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3)
 
 print('\n')
 print('Initialization: ' +
@@ -383,6 +441,6 @@ print('Initialization: ' +
 print('Computations:   ' +
       f'{round(T_BARNORM_COMP + t_index_seq, 6):6.2f} sec.')
 print('Plotting:       ' +
-      f'{round(t_traj_plot + t_plot_ang_fun, 6):6.2f} sec.')
+      f'{round(t_plot, 6):6.2f} sec.')
 print('Total:          ' +
       f'{round(t_total, 6):6.2f} sec.')
