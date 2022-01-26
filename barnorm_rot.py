@@ -2,7 +2,7 @@
 """Barabanov norms for rotation matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Mon Jan 17 18:50:05 2022 +0300.
+Last updated on Wed Jan 26 15:45:45 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -28,13 +28,11 @@ def polygonal_norm(_x, _y, _h):
         real: vector's norm
     """
     _hb = _h.bounds
-    _scale = 0.5 * math.sqrt(
-        ((_hb[2] - _hb[0])**2 +
-         (_hb[3] - _hb[1])**2) / (_x**2 + _y**2))
+    _scale = 0.5 * math.sqrt(((_hb[2] - _hb[0])**2 + (_hb[3] - _hb[1])**2) /
+                             (_x**2 + _y**2))
     _ll = LineString([(0, 0), (_scale*_x, _scale*_y)])
     _h_int = _ll.intersection(_h).coords
-    return math.sqrt(
-        (_x**2 + _y**2) / (_h_int[1][0]**2 + _h_int[1][1]**2))
+    return math.sqrt((_x**2 + _y**2) / (_h_int[1][0]**2 + _h_int[1][1]**2))
 
 
 def min_max_norms_quotent(_g, _h):
@@ -49,12 +47,10 @@ def min_max_norms_quotent(_g, _h):
     """
     _pg = _g.boundary.coords
     _dimg = len(_pg) - 1
-    _sg = [1 / polygonal_norm(_pg[i][0], _pg[i][1], _h)
-           for i in range(_dimg)]
+    _sg = [1 / polygonal_norm(_pg[i][0], _pg[i][1], _h) for i in range(_dimg)]
     _ph = _h.boundary.coords
     _dimh = len(_ph) - 1
-    _sh = [polygonal_norm(_ph[i][0], _ph[i][1], _g)
-           for i in range(_dimh)]
+    _sh = [polygonal_norm(_ph[i][0], _ph[i][1], _g) for i in range(_dimh)]
     _sgh = _sg + _sh
     return (min(_sgh), max(_sgh))
 
@@ -98,9 +94,8 @@ COS_A1 = math.cos(THETA1)
 SIN_A1 = math.sin(THETA1)
 LAMBDA = 0.75
 
-A0 = np.asarray([[COS_A0, -SIN_A0],  [SIN_A0, COS_A0]])
-A1 = np.asarray([[COS_A1, -LAMBDA * SIN_A1],
-                 [(1 / LAMBDA) * SIN_A1, COS_A1]])
+A0 = np.asarray([[COS_A0, -SIN_A0], [SIN_A0, COS_A0]])
+A1 = np.asarray([[COS_A1, -LAMBDA * SIN_A1], [(1 / LAMBDA) * SIN_A1, COS_A1]])
 A0T = np.transpose(A0)
 A1T = np.transpose(A1)
 
@@ -149,15 +144,13 @@ while True:
 
     rho = (rho_max + rho_min) / 2
 
-    h0 = h0.intersection(shapely.affinity.scale(h12, xfact=rho,
-                                                yfact=rho))
+    h0 = h0.intersection(shapely.affinity.scale(h12, xfact=rho, yfact=rho))
 
     T_BARNORM_COMP += (time.time() - t_tick)
 
     NITER += 1
-    print(f'{NITER:3.0f}.', f'{rho_min:.6f}',
-          f'{rho:.6f}', f'{rho_max:.6f}', '   ',
-          len(h0.boundary.coords) - 1)
+    print(f'{NITER:3.0f}.', f'{rho_min:.6f}', f'{rho:.6f}', f'{rho_max:.6f}',
+          '   ', len(h0.boundary.coords) - 1)
     scale0 = 1 / max(h0.bounds[2], h0.bounds[3])
     h0 = shapely.affinity.scale(h0, xfact=scale0, yfact=scale0)
 
@@ -272,14 +265,12 @@ for i in range(LEN_TRAJECTORY):
         x = x0
         ax2.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
                   head_width=0.04, head_length=0.08, linewidth=0.75,
-                  color='red', length_includes_head=True,
-                  zorder=-i)
+                  color='red', length_includes_head=True, zorder=-i)
     else:
         x = x1
         ax2.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
                   head_width=0.04, head_length=0.08, linewidth=0.75,
-                  color='blue', length_includes_head=True,
-                  zorder=-i)
+                  color='blue', length_includes_head=True, zorder=-i)
     if ((polygonal_norm(x[0], x[1], h0) > U_BOUND) or
             (polygonal_norm(x[0], x[1], h0) < L_BOUND)):
         break
@@ -298,37 +289,37 @@ omega1 = (arr_switches[1] + arr_switches[2])/2.
 omega2 = omega1 + math.pi/2.
 omega3 = omega2 + math.pi/2.
 omega4 = omega3 + math.pi/2.
-props = dict(boxstyle='round', facecolor='gainsboro',
-             edgecolor='none', alpha=0.5)
+props = dict(boxstyle='round', facecolor='gainsboro', edgecolor='none',
+             alpha=0.5)
 p_label = np.array([math.cos(omega1), math.sin(omega1)])
 
 if (polygonal_norm(p_label[0], p_label[1], h10) >
         polygonal_norm(p_label[0], p_label[1], h20)):
-    ax2.text(0.9 * bb * math.cos(omega1),
-             0.9 * bb * math.sin(omega1), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
-    ax2.text(0.8 * bb * math.cos(omega2),
-             0.8 * bb * math.sin(omega2), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
-    ax2.text(0.9 * bb * math.cos(omega3),
-             0.9 * bb * math.sin(omega3), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
-    ax2.text(0.8 * bb * math.cos(omega4),
-             0.8 * bb * math.sin(omega4), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega1), 0.9 * bb * math.sin(omega1),
+             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega2), 0.8 * bb * math.sin(omega2),
+             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega3), 0.9 * bb * math.sin(omega3),
+             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega4), 0.8 * bb * math.sin(omega4),
+             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
 else:
-    ax2.text(0.8 * bb * math.cos(omega1),
-             0.8 * bb * math.sin(omega1), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
-    ax2.text(0.9 * bb * math.cos(omega2),
-             0.9 * bb * math.sin(omega2), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
-    ax2.text(0.8 * bb * math.cos(omega3),
-             0.8 * bb * math.sin(omega3), r'$x_{n+1}=A_1x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
-    ax2.text(0.9 * bb * math.cos(omega4),
-             0.9 * bb * math.sin(omega4), r'$x_{n+1}=A_0x_n$',
-             ha='center', va='center', fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega1), 0.8 * bb * math.sin(omega1),
+             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega2), 0.9 * bb * math.sin(omega2),
+             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega3), 0.8 * bb * math.sin(omega3),
+             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega4), 0.9 * bb * math.sin(omega4),
+             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
 
 t_plot_fig2 = time.time() - t_tick
 pyplot.show()
@@ -351,12 +342,12 @@ for i, item in enumerate(t):
     angle_arr_A0[i] = matrix_angular_coord(A0, item)
     angle_arr_A1[i] = matrix_angular_coord(A1, item)
 
-ax3.plot(t, angle_arr_A0, 'r--',
-         t, angle_arr_A1, 'b--', linewidth=0.15)
-ax3.plot(t, angle_arr_A0 + math.pi, 'r--',
-         t, angle_arr_A1 + math.pi, 'b--', linewidth=0.15)
-ax3.plot(t, angle_arr_A0 - math.pi, 'r--',
-         t, angle_arr_A1 - math.pi, 'b--', linewidth=0.15)
+ax3.plot(t, angle_arr_A0, 'r--', t, angle_arr_A1, 'b--',
+         linewidth=0.15)
+ax3.plot(t, angle_arr_A0 + math.pi, 'r--', t, angle_arr_A1 + math.pi, 'b--',
+         linewidth=0.15)
+ax3.plot(t, angle_arr_A0 - math.pi, 'r--', t, angle_arr_A1 - math.pi, 'b--',
+         linewidth=0.15)
 
 # Plotting the angle function delivering
 # the maximal growth rate of iterations
@@ -428,18 +419,18 @@ t_index_seq = time.time() - t_tick
 # Saving plots to pdf-files
 
 """
-fig1.savefig(f'bnorm-{THETA0:.2f}-{THETA1:.2f}-' +
-             f'{LAMBDA:.2f}.pdf', bbox_inches='tight')
-fig2.savefig(f'etraj-{THETA0:.2f}-{THETA1:.2f}-' +
-             f'{LAMBDA:.2f}.pdf', bbox_inches='tight')
-fig3.savefig(f'sfunc-{THETA0:.2f}-{THETA1:.2f}-' +
-             f'{LAMBDA:.2f}.pdf', bbox_inches='tight')
+fig1.savefig(f'bnorm-{THETA0:.2f}-{THETA1:.2f}-{LAMBDA:.2f}.pdf',
+             bbox_inches='tight')
+fig2.savefig(f'etraj-{THETA0:.2f}-{THETA1:.2f}-{LAMBDA:.2f}.pdf',
+             bbox_inches='tight')
+fig3.savefig(f'sfunc-{THETA0:.2f}-{THETA1:.2f}-{LAMBDA:.2f}.pdf',
+             bbox_inches='tight')
 """
 
 # Computation timing
 
-t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 +
-           T_BARNORM_COMP + t_index_seq)
+t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 + T_BARNORM_COMP +
+           t_index_seq)
 t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3)
 
 print('\n')
