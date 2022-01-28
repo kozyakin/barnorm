@@ -2,7 +2,7 @@
 """Barabanov norms for positive triangular matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Wed Jan 26 15:18:06 2022 +0300.
+Last updated on Fri Jan 28 14:16:34 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -345,11 +345,17 @@ for i, item in enumerate(t):
     angle_arr_A0[i] = matrix_angular_coord(A0, item)
     angle_arr_A1[i] = matrix_angular_coord(A1, item)
 
-ax3.plot(t, angle_arr_A0, 'r--', t, angle_arr_A1, 'b--',
+ax3.plot(t, angle_arr_A0, linestyle=(0, (30, 30)), color='red',
          linewidth=0.15)
-ax3.plot(t, angle_arr_A0 + math.pi, 'r--', t, angle_arr_A1 + math.pi, 'b--',
+ax3.plot(t, angle_arr_A0 + math.pi, linestyle=(0, (30, 30)), color='red',
          linewidth=0.15)
-ax3.plot(t, angle_arr_A0 - math.pi, 'r--', t, angle_arr_A1 - math.pi, 'b--',
+ax3.plot(t, angle_arr_A0 - math.pi, linestyle=(0, (30, 30)), color='red',
+         linewidth=0.15)
+ax3.plot(t, angle_arr_A1, linestyle=(0, (30, 30)), color='blue',
+         linewidth=0.15)
+ax3.plot(t, angle_arr_A1 + math.pi, linestyle=(0, (30, 30)), color='blue',
+         linewidth=0.15)
+ax3.plot(t, angle_arr_A1 - math.pi, linestyle=(0, (30, 30)), color='blue',
          linewidth=0.15)
 
 # Plotting the angle function delivering
@@ -416,11 +422,17 @@ for i, item in enumerate(t):
     angle_arr_A0[i] = matrix_angular_coord(A0, item)
     angle_arr_A1[i] = matrix_angular_coord(A1, item)
 
-ax4.plot(t, angle_arr_A0, 'r--', t, angle_arr_A1, 'b--',
+ax4.plot(t, angle_arr_A0, linestyle=(0, (30, 30)), color='red',
          linewidth=0.15)
-ax4.plot(t, angle_arr_A0 + math.pi, 'r--', t, angle_arr_A1 + math.pi, 'b--',
+ax4.plot(t, angle_arr_A0 + math.pi, linestyle=(0, (30, 30)), color='red',
          linewidth=0.15)
-ax4.plot(t, angle_arr_A0 - math.pi, 'r--', t, angle_arr_A1 - math.pi, 'b--',
+ax4.plot(t, angle_arr_A0 - math.pi, linestyle=(0, (30, 30)), color='red',
+         linewidth=0.15)
+ax4.plot(t, angle_arr_A1, linestyle=(0, (30, 30)), color='blue',
+         linewidth=0.15)
+ax4.plot(t, angle_arr_A1 + math.pi, linestyle=(0, (30, 30)), color='blue',
+         linewidth=0.15)
+ax4.plot(t, angle_arr_A1 - math.pi, linestyle=(0, (30, 30)), color='blue',
          linewidth=0.15)
 
 
