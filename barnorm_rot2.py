@@ -2,7 +2,7 @@
 """Barabanov norms.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Fri Jan 28 14:16:24 2022 +0300.
+Last updated on Sat Feb 19 15:37:28 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -321,7 +321,7 @@ else:
 t_plot_fig2 = time.time() - t_tick
 pyplot.show()
 
-# Plotting the angle functions
+# Plotting the angular functions
 
 t_tick = time.time()
 
@@ -352,7 +352,7 @@ ax3.plot(t, angle_arr_A1 + math.pi, linestyle=(0, (30, 30)), color='blue',
 ax3.plot(t, angle_arr_A1 - math.pi, linestyle=(0, (30, 30)), color='blue',
          linewidth=0.15)
 
-# Plotting the angle function delivering
+# Plotting the angular function delivering
 # the maximal growth rate of iterations
 
 for j in range(arr_switch_N + 1):
