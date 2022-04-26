@@ -2,7 +2,7 @@
 """Barabanov norms for rotation matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sat Feb 19 15:37:46 2022 +0300.
+Last updated on Tue Apr 26 16:32:20 2022 +0300
 
 @author: Victor Kozyakin
 """
@@ -399,9 +399,13 @@ t_tick = time.time()
 
 F0 = 0.
 F1 = 0.
+F00 = 0.
+F01 = 0.
+F10 = 0.
+F11 = 0.
 x = np.asarray([1, 1])
+index_seq = []
 
-print('\nExtremal index sequence: ', end='')
 for i in range(LEN_TRAJECTORY):
     x = x / polygonal_norm(x[0], x[1], h0)
     x0 = np.matmul(x, A0T)
@@ -409,17 +413,33 @@ for i in range(LEN_TRAJECTORY):
     if (polygonal_norm(x0[0], x0[1], h0) >
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
+        index_seq.append('0')
         F0 += 1
-        if i < NUM_SYMB:
-            print('0', end='')
     else:
         x = x1
+        index_seq.append('1')
         F1 += 1
-        if i < NUM_SYMB:
-            print('1', end='')
+    if ((i > 0) and (index_seq[i-1] == '0') and (index_seq[i] == '0')):
+        F00 += 1
+    if ((i > 0) and (index_seq[i-1] == '0') and (index_seq[i] == '1')):
+        F01 += 1
+    if ((i > 0) and (index_seq[i-1] == '1') and (index_seq[i] == '0')):
+        F10 += 1
+    if ((i > 0) and (index_seq[i-1] == '1') and (index_seq[i] == '1')):
+        F11 += 1
+
+print('\nExtremal index sequence: ', end='')
+for i in range(NUM_SYMB):
+    print(index_seq[i], end='')
 
 print(f'\n\nFreq_of_0 = {round(F0/LEN_TRAJECTORY, 3):.3f},',
       f' freq_of_1 = {round(F1/LEN_TRAJECTORY, 3):.3f}')
+
+print(f'\nFreq_of_00 = {round(F00/(LEN_TRAJECTORY-1), 3):.3f},',
+      f'Freq_of_01 = {round(F01/(LEN_TRAJECTORY-1), 3):.3f},',
+      f'Freq_of_10 = {round(F10/(LEN_TRAJECTORY-1), 3):.3f},',
+      f'Freq_of_11 = {round(F11/(LEN_TRAJECTORY-1), 3):.3f},')
+
 t_index_seq = time.time() - t_tick
 
 # Saving plots to pdf-files
