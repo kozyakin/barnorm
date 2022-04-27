@@ -515,13 +515,16 @@ print('\nExtremal index sequence: ', end='')
 for i in range(NUM_SYMB):
     print(index_seq[i], end='')
 
-print(f'\n\nFreq_of_0 = {round(F0/LEN_TRAJECTORY, 3):.3f},',
-      f' freq_of_1 = {round(F1/LEN_TRAJECTORY, 3):.3f}')
+print('\n\nFrequences of symbols 0, 1, 00, 01 etc. in the index sequence:',
+      '\n\nSymbols:       0      1      00     01     10     11')
 
-print(f'\nFreq_of_00 = {round(F00/(LEN_TRAJECTORY-1), 3):.3f},',
-      f'Freq_of_01 = {round(F01/(LEN_TRAJECTORY-1), 3):.3f},',
-      f'Freq_of_10 = {round(F10/(LEN_TRAJECTORY-1), 3):.3f},',
-      f'Freq_of_11 = {round(F11/(LEN_TRAJECTORY-1), 3):.3f},')
+print('Frequences: ',
+      f' {round(F0/LEN_TRAJECTORY, 3):.3f}',
+      f' {round(F1/LEN_TRAJECTORY, 3):.3f}',
+      f' {round(F00/(LEN_TRAJECTORY-1), 3):.3f}',
+      f' {round(F01/(LEN_TRAJECTORY-1), 3):.3f}',
+      f' {round(F10/(LEN_TRAJECTORY-1), 3):.3f}',
+      f' {round(F11/(LEN_TRAJECTORY-1), 3):.3f}')
 
 t_index_seq = time.time() - t_tick
 
@@ -544,8 +547,7 @@ t_total = (t_ini + t_plot_fig4 + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 +
            T_BARNORM_COMP + t_index_seq)
 t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3 + t_plot_fig4)
 
-print('\n')
-print('Initialization: ' +
+print('\nInitialization: ' +
       f'{round(t_ini, 6):6.2f} sec.')
 print('Computations:   ' +
       f'{round(T_BARNORM_COMP + t_index_seq, 6):6.2f} sec.')
