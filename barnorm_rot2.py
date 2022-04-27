@@ -2,7 +2,7 @@
 """Barabanov norms.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Tue Apr 26 16:32:20 2022 +0300
+Last updated on Wed Apr 27 17:07:05 2022 +0300
 
 @author: Victor Kozyakin
 """
@@ -452,15 +452,11 @@ fig2.savefig(f'sfunc-{THETA0:.2f}-{THETA1:.2f}.pdf', bbox_inches='tight')
 
 # Computation timing
 
-t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 + T_BARNORM_COMP +
-           t_index_seq)
+t_compute = T_BARNORM_COMP + t_index_seq
+t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 + t_compute)
 t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3)
 
-print('\nInitialization: ' +
-      f'{round(t_ini, 6):6.2f} sec.')
-print('Computations:   ' +
-      f'{round(T_BARNORM_COMP + t_index_seq, 6):6.2f} sec.')
-print('Plotting:       ' +
-      f'{round(t_plot, 6):6.2f} sec.')
-print('Total:          ' +
-      f'{round(t_total, 6):6.2f} sec.')
+print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
+print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
+print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
+print('Total:          ', f'{round(t_total, 6):6.2f} sec.')

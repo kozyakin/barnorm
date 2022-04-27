@@ -2,7 +2,7 @@
 """Barabanov norms for positive triangular matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Tue Apr 26 16:32:20 2022 +0300
+Last updated on Wed Apr 27 17:07:05 2022 +0300
 
 @author: Victor Kozyakin
 """
@@ -543,15 +543,11 @@ fig4.savefig(f'sfunc2-{ALPHA:.2f}-{AAA:.2f}-{BBB:.2f}-{BETA:.2f}-' +
 
 # Computation timing
 
-t_total = (t_ini + t_plot_fig4 + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 +
-           T_BARNORM_COMP + t_index_seq)
-t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3 + t_plot_fig4)
+t_compute = T_BARNORM_COMP + t_index_seq
+t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 + t_compute)
+t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3)
 
-print('\nInitialization: ' +
-      f'{round(t_ini, 6):6.2f} sec.')
-print('Computations:   ' +
-      f'{round(T_BARNORM_COMP + t_index_seq, 6):6.2f} sec.')
-print('Plotting:       ' +
-      f'{round(t_plot, 6):6.2f} sec.')
-print('Total:          ' +
-      f'{round(t_total, 6):6.2f} sec.')
+print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
+print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
+print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
+print('Total:          ', f'{round(t_total, 6):6.2f} sec.')
