@@ -501,14 +501,15 @@ for i in range(LEN_TRAJECTORY):
         x = x1
         index_seq.append('1')
         F1 += 1
-    if ((i > 0) and (index_seq[i-1] == '0') and (index_seq[i] == '0')):
-        F00 += 1
-    if ((i > 0) and (index_seq[i-1] == '0') and (index_seq[i] == '1')):
-        F01 += 1
-    if ((i > 0) and (index_seq[i-1] == '1') and (index_seq[i] == '0')):
-        F10 += 1
-    if ((i > 0) and (index_seq[i-1] == '1') and (index_seq[i] == '1')):
-        F11 += 1
+    if i > 0:
+        if ((index_seq[i-1] == '0') and (index_seq[i] == '0')):
+            F00 += 1
+        if ((index_seq[i-1] == '0') and (index_seq[i] == '1')):
+            F01 += 1
+        if ((index_seq[i-1] == '1') and (index_seq[i] == '0')):
+            F10 += 1
+        if ((index_seq[i-1] == '1') and (index_seq[i] == '1')):
+            F11 += 1
 
 print('\nExtremal index sequence: ', end='')
 for i in range(NUM_SYMB):
