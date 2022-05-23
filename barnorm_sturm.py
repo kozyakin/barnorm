@@ -544,8 +544,8 @@ fig4.savefig(f'sfunc2-{ALPHA:.2f}-{AAA:.2f}-{BBB:.2f}-{BETA:.2f}-' +
 # Computation timing
 
 t_compute = T_BARNORM_COMP + t_index_seq
-t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 + t_compute)
-t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3)
+t_plot = t_plot_fig1 + t_plot_fig2 + t_plot_fig3 + t_plot_fig4
+t_total = t_ini + t_plot + t_compute
 
 print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
 print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')

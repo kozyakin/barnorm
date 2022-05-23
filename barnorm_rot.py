@@ -460,8 +460,9 @@ fig3.savefig(f'sfunc-{THETA0:.2f}-{THETA1:.2f}-{LAMBDA:.2f}.pdf',
 # Computation timing
 
 t_compute = T_BARNORM_COMP + t_index_seq
-t_total = (t_ini + t_plot_fig3 + t_plot_fig2 + t_plot_fig1 + t_compute)
-t_plot = (t_plot_fig1 + t_plot_fig2 + t_plot_fig3)
+t_plot = t_plot_fig1 + t_plot_fig2 + t_plot_fig3
+t_total = t_ini + t_plot + t_compute
+
 
 print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
 print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
