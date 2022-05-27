@@ -226,7 +226,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig2 = pyplot.figure(1, dpi=108)
+fig2 = pyplot.figure(2, dpi=108)
 ax2 = fig2.add_subplot(111)
 ax2.set_xlim(-1.1*bb, 1.1*bb)
 ax2.set_ylim(-1.1*bb, 1.1*bb)
@@ -331,7 +331,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig3 = pyplot.figure(2, dpi=108)
+fig3 = pyplot.figure(3, dpi=108)
 ax3 = fig3.add_subplot(111)
 ax3.set_xlim(0., math.pi)
 ax3.set_ylim(0., math.pi)
@@ -399,7 +399,7 @@ pyplot.show()
 #
 t_tick = time.time()
 
-fig4 = pyplot.figure(3, dpi=108)
+fig4 = pyplot.figure(4, dpi=108)
 ax4 = fig4.add_subplot(111)
 ax4.set_xlim(0., math.pi/2.)
 ax4.set_ylim(0., math.pi/2.)

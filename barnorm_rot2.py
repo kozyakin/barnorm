@@ -165,7 +165,7 @@ h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
 p20 = np.asarray(MultiPoint(h20.boundary.coords))
 
 bb = 1.7 * max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
-              h0.bounds[3], h10.bounds[3], h20.bounds[3])
+               h0.bounds[3], h10.bounds[3], h20.bounds[3])
 
 pyplot.rc('text', usetex=True)
 pyplot.rc('font', family='serif')
@@ -209,8 +209,8 @@ for i in range(np.size(h_int[:, 0])):
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
     if h_int[i, 0] >= 0:
         ax1.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
-                [2 * h_int[i, 1], -2 * h_int[i, 1]],
-                dashes=[5, 2, 1, 2], color='green', linewidth=1)
+                 [2 * h_int[i, 1], -2 * h_int[i, 1]],
+                 dashes=[5, 2, 1, 2], color='green', linewidth=1)
 
 t_plot_fig1 = time.time() - t_tick
 pyplot.show()
@@ -220,7 +220,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig2 = pyplot.figure(1, dpi=108)
+fig2 = pyplot.figure(2, dpi=108)
 ax2 = fig2.add_subplot(111)
 ax2.set_xlim(-1.1*bb, 1.1*bb)
 ax2.set_ylim(-1.1*bb, 1.1*bb)
@@ -325,7 +325,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig3 = pyplot.figure(2, dpi=108)
+fig3 = pyplot.figure(3, dpi=108)
 ax3 = fig3.add_subplot(111)
 ax3.set_xlim(0., math.pi)
 ax3.set_ylim(0., math.pi)
