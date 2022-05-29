@@ -181,7 +181,7 @@ pyplot.rc('font', family='serif')
 
 # Plotting Barabanov's norm
 
-fig1 = pyplot.figure(1, dpi=108)
+fig1 = pyplot.figure("A Barabanov norm", dpi=108)
 ax1 = fig1.add_subplot(111)
 ax1.set_xlim(-1.1*bb, 1.1*bb)
 ax1.set_ylim(-1.1*bb, 1.1*bb)
@@ -220,7 +220,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig2 = pyplot.figure(2, dpi=108)
+fig2 = pyplot.figure("A maximum growth rate trajectory", dpi=108)
 ax2 = fig2.add_subplot(111)
 ax2.set_xlim(-1.1*bb, 1.1*bb)
 ax2.set_ylim(-1.1*bb, 1.1*bb)
@@ -325,7 +325,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig3 = pyplot.figure(3, dpi=108)
+fig3 = pyplot.figure("The angular function", dpi=108)
 ax3 = fig3.add_subplot(111)
 ax3.set_xlim(0., math.pi)
 ax3.set_ylim(0., math.pi)
