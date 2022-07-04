@@ -554,8 +554,7 @@ print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
 print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
 print('Total:          ', f'{round(t_total, 6):6.2f} sec.')
 
-print("\nVersions of modules used:\n")
-print("Python     = ", platform.python_version())
-print("matplotlib = ", version('matplotlib'))
-print("numpy      = ", version('numpy'))
-print("shapely    = ", version('shapely'))
+print("\nModules used:  Python ", platform.python_version(),
+      ", matplotlib ", version('matplotlib'),
+      ", numpy ", version('numpy'),
+      ", shapely ", version('shapely'), sep="")

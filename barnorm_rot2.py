@@ -2,10 +2,12 @@
 """Barabanov norms.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Wed Apr 27 17:07:05 2022 +0300
+Last updated on Mon Jul 4 10:41:43 2022 +0300
 
 @author: Victor Kozyakin
 """
+from importlib.metadata import version
+import platform
 import time
 import math
 from matplotlib import pyplot
@@ -460,3 +462,8 @@ print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
 print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
 print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
 print('Total:          ', f'{round(t_total, 6):6.2f} sec.')
+
+print("\nModules used:  Python ", platform.python_version(),
+      ", matplotlib ", version('matplotlib'),
+      ", numpy ", version('numpy'),
+      ", shapely ", version('shapely'), sep="")
