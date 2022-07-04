@@ -2,10 +2,12 @@
 """Barabanov norms for rotation matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Wed Apr 27 17:07:05 2022 +0300
+Last updated on Mon Jul 4 10:33:11 2022 +0300
 
 @author: Victor Kozyakin
 """
+from importlib.metadata import version
+import platform
 import time
 import math
 from matplotlib import pyplot
@@ -468,3 +470,9 @@ print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
 print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
 print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
 print('Total:          ', f'{round(t_total, 6):6.2f} sec.')
+
+print("\nVersions of modules used:\n")
+print("Python     = ", platform.python_version())
+print("matplotlib = ", version('matplotlib'))
+print("numpy      = ", version('numpy'))
+print("shapely    = ", version('shapely'))
