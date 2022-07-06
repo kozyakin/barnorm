@@ -6,16 +6,15 @@ Last updated on Wed Apr 27 17:07:05 2022 +0300
 
 @author: Victor Kozyakin
 """
-from importlib.metadata import version
+import math
 import platform
 import time
-import math
-from matplotlib import pyplot
-from matplotlib.ticker import MultipleLocator
+from importlib.metadata import version
 import numpy as np
 import shapely
-from shapely.geometry import LineString
-from shapely.geometry import MultiPoint
+from matplotlib import pyplot
+from matplotlib.ticker import MultipleLocator
+from shapely.geometry import LineString, MultiPoint
 
 
 def polygonal_norm(_x, _y, _h):
