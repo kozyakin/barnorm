@@ -2,7 +2,7 @@
 """Barabanov norms for positive triangular matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Mon Jan 17 09:58:59 2022 +0300.
+Last updated on Sat Sep 17 13:31:25 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -169,7 +169,7 @@ pyplot.rc('font', family='serif')
 #     r'\usepackage{amsmath}'
 # =================================================================
 
-fig = pyplot.figure(1, dpi=108)
+fig = pyplot.figure(num="Maximum growth rate trajectory", dpi=108)
 ax = fig.add_subplot(111)
 ax.set_xlim(-1.1*bb, 1.1*bb)
 ax.set_ylim(-1.1*bb, 1.1*bb)
@@ -271,7 +271,7 @@ def matrix_angular_coord(_a, _t):
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
 
-fig2 = pyplot.figure(2, dpi=108)
+fig2 = pyplot.figure("Angular function", dpi=108)
 ax1 = fig2.add_subplot(111)
 ax1.set_xlim(0., math.pi)
 ax1.set_ylim(0., math.pi)
@@ -340,7 +340,7 @@ pyplot.show()
 #
 t_tick = time.time()
 
-fig3 = pyplot.figure(3, dpi=108)
+fig3 = pyplot.figure(num="Angular function in the first quadrant", dpi=108)
 ax3 = fig3.add_subplot(111)
 ax3.set_xlim(0., math.pi/2.)
 ax3.set_ylim(0., math.pi/2.)

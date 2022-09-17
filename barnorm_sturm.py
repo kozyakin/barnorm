@@ -2,7 +2,7 @@
 """Barabanov norms for positive triangular matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Wed Apr 27 17:07:05 2022 +0300
+Last updated on Sat Sep 17 13:17:30 2022 +0300
 
 @author: Victor Kozyakin
 """
@@ -186,7 +186,7 @@ pyplot.rc('font', family='serif')
 
 # Plotting Barabanov's norm
 
-fig1 = pyplot.figure("Barabanov norm", dpi=108)
+fig1 = pyplot.figure(num="Barabanov norm", dpi=108)
 ax1 = fig1.add_subplot(111)
 ax1.set_xlim(-1.1*bb, 1.1*bb)
 ax1.set_ylim(-1.1*bb, 1.1*bb)
@@ -228,7 +228,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig2 = pyplot.figure("Maximum growth rate trajectory", dpi=108)
+fig2 = pyplot.figure(num="Maximum growth rate trajectory", dpi=108)
 ax2 = fig2.add_subplot(111)
 ax2.set_xlim(-1.1*bb, 1.1*bb)
 ax2.set_ylim(-1.1*bb, 1.1*bb)
@@ -401,7 +401,7 @@ pyplot.show()
 #
 t_tick = time.time()
 
-fig4 = pyplot.figure("Angular function in the first quadrant", dpi=108)
+fig4 = pyplot.figure(num="Angular function in the first quadrant", dpi=108)
 ax4 = fig4.add_subplot(111)
 ax4.set_xlim(0., math.pi/2.)
 ax4.set_ylim(0., math.pi/2.)

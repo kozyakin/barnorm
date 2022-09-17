@@ -2,7 +2,7 @@
 """Barabanov norms for rotation matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Mon Jan 17 09:53:51 2022 +0300.
+Last updated on Sat Sep 17 13:29:14 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -171,7 +171,7 @@ pyplot.rc('font', family='serif')
 #     r'\usepackage{amsmath}'
 # =================================================================
 
-fig = pyplot.figure(1, dpi=108)
+fig = pyplot.figure(num="Maximum growth rate trajectory", dpi=108)
 ax = fig.add_subplot(111)
 ax.set_xlim(-1.1*bb, 1.1*bb)
 ax.set_ylim(-1.1*bb, 1.1*bb)
@@ -275,7 +275,7 @@ def matrix_angular_coord(_a, _t):
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
 
-fig2 = pyplot.figure(2, dpi=108)
+fig2 = pyplot.figure(num="Angular function", dpi=108)
 ax1 = fig2.add_subplot(111)
 ax1.set_xlim(0., math.pi)
 ax1.set_ylim(0., math.pi)

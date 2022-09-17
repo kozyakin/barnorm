@@ -2,7 +2,7 @@
 """Barabanov norms.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Mon Jul 4 10:41:43 2022 +0300
+Last updated on Sat Sep 17 13:33:35 2022 +0300.
 
 @author: Victor Kozyakin
 """
@@ -183,7 +183,7 @@ pyplot.rc('font', family='serif')
 
 # Plotting Barabanov's norm
 
-fig1 = pyplot.figure("Barabanov norm", dpi=108)
+fig1 = pyplot.figure(num="Barabanov norm", dpi=108)
 ax1 = fig1.add_subplot(111)
 ax1.set_xlim(-1.1*bb, 1.1*bb)
 ax1.set_ylim(-1.1*bb, 1.1*bb)
@@ -222,7 +222,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig2 = pyplot.figure("Maximum growth rate trajectory", dpi=108)
+fig2 = pyplot.figure(num="Maximum growth rate trajectory", dpi=108)
 ax2 = fig2.add_subplot(111)
 ax2.set_xlim(-1.1*bb, 1.1*bb)
 ax2.set_ylim(-1.1*bb, 1.1*bb)
@@ -327,7 +327,7 @@ pyplot.show()
 
 t_tick = time.time()
 
-fig3 = pyplot.figure("Angular function", dpi=108)
+fig3 = pyplot.figure(num="Angular function", dpi=108)
 ax3 = fig3.add_subplot(111)
 ax3.set_xlim(0., math.pi)
 ax3.set_ylim(0., math.pi)
