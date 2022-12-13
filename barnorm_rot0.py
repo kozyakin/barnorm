@@ -2,7 +2,8 @@
 """Barabanov norms.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sat Sep 17 13:17:44 2022 +0300
+Last updated on Tue Dec 13 13:20:46 2022 +0300
+Make compatible with Shapely v2.0
 
 @author: Victor Kozyakin
 """
@@ -13,6 +14,7 @@ from importlib.metadata import version
 
 import numpy as np
 import shapely
+import shapely.affinity
 from matplotlib import pyplot
 from shapely.geometry import LineString, MultiPoint
 
@@ -32,8 +34,8 @@ def polygonal_norm(_x, _y, _h):
     _scale = 0.5 * math.sqrt(((_hb[2] - _hb[0])**2 + (_hb[3] - _hb[1])**2) /
                              (_x**2 + _y**2))
     _ll = LineString([(0, 0), (_scale*_x, _scale*_y)])
-    _h_int = _ll.intersection(_h).coords
-    return math.sqrt((_x**2 + _y**2) / (_h_int[1][0]**2 + _h_int[1][1]**2))
+    _p_int = _ll.intersection(_h).coords
+    return math.sqrt((_x**2 + _y**2) / (_p_int[1][0]**2 + _p_int[1][1]**2))
 
 
 def min_max_norms_quotent(_g, _h):
@@ -93,7 +95,11 @@ print("\n  #   rho_min   gamma   rho_max  Num_edges\n")
 while True:
     t1 = time.time()
 
-    p0 = np.asarray(MultiPoint(h0.boundary.coords))
+    tmp_geom = np.array(MultiPoint(h0.boundary.coords).geoms)
+    tmp_list = []
+    for pp in tmp_geom:
+        tmp_list.append([pp.x, pp.y])
+    p0 = np.array(tmp_list)
 
     p1 = np.matmul(p0, invA0T)
     p1 = MultiPoint(p1)
@@ -132,10 +138,18 @@ while True:
 # Plotting
 
 h10 = shapely.affinity.scale(h1, xfact=gamma, yfact=gamma)
-p10 = np.asarray(MultiPoint(h10.boundary.coords))
+tmp_geom = np.array(MultiPoint(h10.boundary.coords).geoms)
+tmp_list = []
+for pp in tmp_geom:
+    tmp_list.append([pp.x, pp.y])
+p10 = np.array(tmp_list)
 
 h20 = shapely.affinity.scale(h2, xfact=gamma, yfact=gamma)
-p20 = np.asarray(MultiPoint(h20.boundary.coords))
+tmp_geom = np.array(MultiPoint(h20.boundary.coords).geoms)
+tmp_list = []
+for pp in tmp_geom:
+    tmp_list.append([pp.x, pp.y])
+p20 = np.array(tmp_list)
 
 bb = 2. * max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
               h0.bounds[3], h10.bounds[3], h20.bounds[3])
@@ -175,11 +189,15 @@ ax.legend()
 
 pl10 = LineString(p10)
 pl20 = LineString(p20)
-h_int = np.asarray(shapely.affinity.scale(pl10.intersection(pl20),
-                                          xfact=3, yfact=3))
-for i in range(np.size(h_int[:, 0])):
-    if h_int[i, 0] >= 0:
-        ax.plot([h_int[i, 0], -h_int[i, 0]], [h_int[i, 1], -h_int[i, 1]], '-',
+h_int = shapely.affinity.scale(pl10.intersection(pl20), xfact=3, yfact=3)
+tmp_geom = np.array(h_int.geoms)
+tmp_list = []
+for pp in tmp_geom:
+    tmp_list.append([pp.x, pp.y])
+p_int = np.array(tmp_list)
+for i in range(np.size(p_int[:, 0])):
+    if p_int[i, 0] >= 0:
+        ax.plot([p_int[i, 0], -p_int[i, 0]], [p_int[i, 1], -p_int[i, 1]], '-',
                 color='green', linewidth=0.25)
 
 # Iterations

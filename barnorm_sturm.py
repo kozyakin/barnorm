@@ -2,7 +2,8 @@
 """Barabanov norms for positive triangular matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sat Sep 17 13:17:30 2022 +0300
+Last updated on Tue Dec 13 13:20:46 2022 +0300
+Make compatible with Shapely v2.0
 
 @author: Victor Kozyakin
 """
@@ -13,6 +14,7 @@ from importlib.metadata import version
 
 import numpy as np
 import shapely
+import shapely.affinity
 from matplotlib import pyplot
 from matplotlib.ticker import MultipleLocator
 from shapely.geometry import LineString, MultiPoint
@@ -33,8 +35,8 @@ def polygonal_norm(_x, _y, _h):
     _scale = 0.5 * math.sqrt(((_hb[2] - _hb[0])**2 + (_hb[3] - _hb[1])**2) /
                              (_x**2 + _y**2))
     _ll = LineString([(0, 0), (_scale*_x, _scale*_y)])
-    _h_int = _ll.intersection(_h).coords
-    return math.sqrt((_x**2 + _y**2) / (_h_int[1][0]**2 + _h_int[1][1]**2))
+    _p_int = _ll.intersection(_h).coords
+    return math.sqrt((_x**2 + _y**2) / (_p_int[1][0]**2 + _p_int[1][1]**2))
 
 
 def min_max_norms_quotent(_g, _h):
@@ -129,7 +131,11 @@ NITER = 0.
 while True:
     t_tick = time.time()
 
-    p0 = np.asarray(MultiPoint(h0.boundary.coords))
+    tmp_geom = np.array(MultiPoint(h0.boundary.coords).geoms)
+    tmp_list = []
+    for pp in tmp_geom:
+        tmp_list.append([pp.x, pp.y])
+    p0 = np.array(tmp_list)
 
     p1 = MultiPoint(np.matmul(p0, INV_A0T))
     h1 = p1.convex_hull
@@ -164,10 +170,20 @@ while True:
 t_tick = time.time()
 
 h10 = shapely.affinity.scale(h1, xfact=rho, yfact=rho)
-p10 = np.asarray(MultiPoint(h10.boundary.coords))
+tmp_geom = np.array(MultiPoint(h10.boundary.coords).geoms)
+tmp_list = []
+for pp in tmp_geom:
+    tmp_list.append([pp.x, pp.y])
+p10 = np.array(tmp_list)
+
 
 h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
-p20 = np.asarray(MultiPoint(h20.boundary.coords))
+tmp_geom = np.array(MultiPoint(h20.boundary.coords).geoms)
+tmp_list = []
+for pp in tmp_geom:
+    tmp_list.append([pp.x, pp.y])
+p20 = np.array(tmp_list)
+
 
 bb = max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
          h0.bounds[3], h10.bounds[3], h20.bounds[3])
@@ -204,17 +220,22 @@ ax1.plot(p0[:, 0], p0[:, 1], '-', color='black')
 
 pl10 = LineString(p10)
 pl20 = LineString(p20)
-h_int = np.asarray(shapely.affinity.scale(pl10.intersection(pl20),
-                                          xfact=6, yfact=6))
-arr_switch_N = np.size(h_int[:, 0])
+h_int = shapely.affinity.scale(pl10.intersection(pl20), xfact=3, yfact=3)
+tmp_geom = np.array(h_int.geoms)
+tmp_list = []
+for pp in tmp_geom:
+    tmp_list.append([pp.x, pp.y])
+p_int = np.array(tmp_list)
+
+arr_switch_N = np.size(p_int[:, 0])
 arr_switch_ang = np.empty(arr_switch_N)
-for i in range(np.size(h_int[:, 0])):
-    arr_switch_ang[i] = math.atan2(h_int[i, 1], h_int[i, 0])
+for i in range(np.size(p_int[:, 0])):
+    arr_switch_ang[i] = math.atan2(p_int[i, 1], p_int[i, 0])
     if arr_switch_ang[i] < 0:
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
-    if h_int[i, 0] >= 0:
-        ax1.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
-                 [2 * h_int[i, 1], -2 * h_int[i, 1]],
+    if p_int[i, 0] >= 0:
+        ax1.plot([2 * p_int[i, 0], -2 * p_int[i, 0]],
+                 [2 * p_int[i, 1], -2 * p_int[i, 1]],
                  dashes=[5, 2, 1, 2], color='green', linewidth=1)
 
 ax1.plot(np.NaN, np.NaN, dashes=[5, 2, 1, 2], color='green',
@@ -240,15 +261,15 @@ ax2.yaxis.set_major_locator(MultipleLocator(2))
 
 # Plotting lines of intersection of norms' unit spheres
 
-arr_switch_N = np.size(h_int[:, 0])
+arr_switch_N = np.size(p_int[:, 0])
 arr_switch_ang = np.empty(arr_switch_N)
-for i in range(np.size(h_int[:, 0])):
-    arr_switch_ang[i] = math.atan2(h_int[i, 1], h_int[i, 0])
+for i in range(np.size(p_int[:, 0])):
+    arr_switch_ang[i] = math.atan2(p_int[i, 1], p_int[i, 0])
     if arr_switch_ang[i] < 0:
         arr_switch_ang[i] = arr_switch_ang[i] + 2. * math.pi
-    if h_int[i, 0] >= 0:
-        ax2.plot([2 * h_int[i, 0], -2 * h_int[i, 0]],
-                 [2 * h_int[i, 1], -2 * h_int[i, 1]],
+    if p_int[i, 0] >= 0:
+        ax2.plot([2 * p_int[i, 0], -2 * p_int[i, 0]],
+                 [2 * p_int[i, 1], -2 * p_int[i, 1]],
                  dashes=[5, 2, 1, 2], color='green', linewidth=1)
 
 
