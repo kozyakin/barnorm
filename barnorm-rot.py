@@ -268,10 +268,10 @@ def matrix_angular_coord(_a, _t):
     """
     _cos_t = math.cos(_t)
     _sin_t = math.sin(_t)
-    _vec_t = np.asarray([_cos_t, _sin_t])
-    _vec_t_transpose = np.transpose(_vec_t)
+    _vect = np.asarray([_cos_t, _sin_t])
+    _vect_transpose = np.transpose(_vect)
     _rot_back = np.asarray([[_cos_t, _sin_t],  [-_sin_t, _cos_t]])
-    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
+    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vect_transpose)
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
 

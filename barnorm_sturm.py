@@ -2,7 +2,7 @@
 """Barabanov norms for positive triangular matrices.
 
 Created on Sat Sep 21 12:37:46 2019.
-Last updated on Tue Dec 13 13:20:46 2022 +0300
+Last updated on Sun Jul 21 02:22:09 2024 +0300
 Make compatible with Shapely v2.0
 
 @author: Victor Kozyakin
@@ -34,7 +34,7 @@ def polygonal_norm(_x, _y, _h):
     _hb = _h.bounds
     _scale = 0.5 * math.sqrt(((_hb[2] - _hb[0])**2 + (_hb[3] - _hb[1])**2) /
                              (_x**2 + _y**2))
-    _ll = LineString([(0, 0), (_scale*_x, _scale*_y)])
+    _ll = LineString([(0, 0), (_scale * _x, _scale * _y)])
     _p_int = _ll.intersection(_h).coords
     return math.sqrt((_x**2 + _y**2) / (_p_int[1][0]**2 + _p_int[1][1]**2))
 
@@ -51,7 +51,8 @@ def min_max_norms_quotent(_g, _h):
     """
     _pg = _g.boundary.coords
     _dimg = len(_pg) - 1
-    _sg = [1 / polygonal_norm(_pg[i][0], _pg[i][1], _h) for i in range(_dimg)]
+    _sg = [1 / polygonal_norm(_pg[i][0], _pg[i][1], _h)
+           for i in range(_dimg)]
     _ph = _h.boundary.coords
     _dimh = len(_ph) - 1
     _sh = [polygonal_norm(_ph[i][0], _ph[i][1], _g) for i in range(_dimh)]
@@ -71,10 +72,10 @@ def matrix_angular_coord(_a, _t):
     """
     _cos_t = math.cos(_t)
     _sin_t = math.sin(_t)
-    _vec_t = np.asarray([_cos_t, _sin_t])
-    _vec_t_transpose = np.transpose(_vec_t)
-    _rot_back = np.asarray([[_cos_t, _sin_t],  [-_sin_t, _cos_t]])
-    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
+    _vect = np.asarray([_cos_t, _sin_t])
+    _vect_transpose = np.transpose(_vect)
+    _rot_back = np.asarray([[_cos_t, _sin_t], [-_sin_t, _cos_t]])
+    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vect_transpose)
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
 
@@ -99,7 +100,7 @@ DDD = 0.9
 
 
 A0 = ALPHA * np.asarray([[AAA, BBB], [0., 1.]])
-A1 = BETA * np.asarray([[1., 0.],  [CCC, DDD]])
+A1 = BETA * np.asarray([[1., 0.], [CCC, DDD]])
 A0T = np.transpose(A0)
 A1T = np.transpose(A1)
 
@@ -131,11 +132,7 @@ NITER = 0.
 while True:
     t_tick = time.time()
 
-    tmp_geom = np.array(MultiPoint(h0.boundary.coords).geoms)
-    tmp_list = []
-    for pp in tmp_geom:
-        tmp_list.append([pp.x, pp.y])
-    p0 = np.array(tmp_list)
+    p0 = np.array(h0.boundary.coords)
 
     p1 = MultiPoint(np.matmul(p0, INV_A0T))
     h1 = p1.convex_hull
@@ -170,20 +167,10 @@ while True:
 t_tick = time.time()
 
 h10 = shapely.affinity.scale(h1, xfact=rho, yfact=rho)
-tmp_geom = np.array(MultiPoint(h10.boundary.coords).geoms)
-tmp_list = []
-for pp in tmp_geom:
-    tmp_list.append([pp.x, pp.y])
-p10 = np.array(tmp_list)
-
+p10 = np.array(h10.boundary.coords)
 
 h20 = shapely.affinity.scale(h2, xfact=rho, yfact=rho)
-tmp_geom = np.array(MultiPoint(h20.boundary.coords).geoms)
-tmp_list = []
-for pp in tmp_geom:
-    tmp_list.append([pp.x, pp.y])
-p20 = np.array(tmp_list)
-
+p20 = np.array(h20.boundary.coords)
 
 bb = max(h0.bounds[2], h10.bounds[2], h20.bounds[2],
          h0.bounds[3], h10.bounds[3], h20.bounds[3])
@@ -204,8 +191,8 @@ pyplot.rc('font', family='serif')
 
 fig1 = pyplot.figure(num="Barabanov norm", dpi=108)
 ax1 = fig1.add_subplot(111)
-ax1.set_xlim(-1.1*bb, 1.1*bb)
-ax1.set_ylim(-1.1*bb, 1.1*bb)
+ax1.set_xlim(-1.1 * bb, 1.1 * bb)
+ax1.set_ylim(-1.1 * bb, 1.1 * bb)
 ax1.set_aspect(1)
 ax1.tick_params(labelsize=16)
 ax1.grid(True, linestyle=":")
@@ -251,8 +238,8 @@ t_tick = time.time()
 
 fig2 = pyplot.figure(num="Maximum growth rate trajectory", dpi=108)
 ax2 = fig2.add_subplot(111)
-ax2.set_xlim(-1.1*bb, 1.1*bb)
-ax2.set_ylim(-1.1*bb, 1.1*bb)
+ax2.set_xlim(-1.1 * bb, 1.1 * bb)
+ax2.set_ylim(-1.1 * bb, 1.1 * bb)
 ax2.set_aspect(1)
 ax2.tick_params(labelsize=16)
 ax2.grid(True, linestyle=":")
@@ -289,12 +276,12 @@ for i in range(LEN_TRAJECTORY):
     if (polygonal_norm(x0[0], x0[1], h0) >
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
-        ax2.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
+        ax2.arrow(xprev[0], xprev[1], x[0] - xprev[0], x[1] - xprev[1],
                   head_width=0.05, head_length=0.1, linewidth=0.75,
                   color='red', length_includes_head=True, zorder=-i)
     else:
         x = x1
-        ax2.arrow(xprev[0], xprev[1], x[0]-xprev[0], x[1]-xprev[1],
+        ax2.arrow(xprev[0], xprev[1], x[0] - xprev[0], x[1] - xprev[1],
                   head_width=0.05, head_length=0.1, linewidth=0.75,
                   color='blue', length_includes_head=True, zorder=-i)
     if ((polygonal_norm(x[0], x[1], h0) > U_BOUND) or
@@ -311,10 +298,10 @@ arr_switch_ang = np.resize(arr_switch_ang, ISPLIT + 1)
 arr_switch_N = np.size(arr_switch_ang)
 arr_switches = np.insert(arr_switch_ang, 0, 0)
 arr_switches = np.append(arr_switches, math.pi)
-omega1 = (arr_switches[1] + arr_switches[2])/2.
-omega2 = omega1 + math.pi/2.
-omega3 = omega2 + math.pi/2.
-omega4 = omega3 + math.pi/2.
+omega1 = (arr_switches[1] + arr_switches[2]) / 2.
+omega2 = omega1 + math.pi / 2.
+omega3 = omega2 + math.pi / 2.
+omega4 = omega3 + math.pi / 2.
 props = dict(boxstyle='round', facecolor='gainsboro', edgecolor='none',
              alpha=0.5)
 p_label = np.array([math.cos(omega1), math.sin(omega1)])
@@ -424,21 +411,21 @@ t_tick = time.time()
 
 fig4 = pyplot.figure(num="Angular function in the first quadrant", dpi=108)
 ax4 = fig4.add_subplot(111)
-ax4.set_xlim(0., math.pi/2.)
-ax4.set_ylim(0., math.pi/2.)
+ax4.set_xlim(0., math.pi / 2.)
+ax4.set_ylim(0., math.pi / 2.)
 ax4.set_aspect(1)
 ax4.tick_params(labelsize=16)
 
 arr_switch_ang.sort()
 ISPLIT = 0
 for i in range(np.size(arr_switch_ang)):
-    if arr_switch_ang[i] < math.pi/2:
+    if arr_switch_ang[i] < math.pi / 2:
         ISPLIT = i
 
 arr_switch_ang = np.resize(arr_switch_ang, ISPLIT + 1)
 arr_switch_N = np.size(arr_switch_ang)
 
-t = np.arange(0., math.pi/2, ANGLE_STEP)
+t = np.arange(0., math.pi / 2, ANGLE_STEP)
 angle_arr_A0 = np.empty(len(t))
 angle_arr_A1 = np.empty(len(t))
 for i, item in enumerate(t):
@@ -463,8 +450,7 @@ ax4.plot(t, angle_arr_A1 - math.pi, linestyle=(0, (30, 30)), color='blue',
 # the maximal growth rate of iterations
 
 arr_switches = np.insert(arr_switch_ang, 0, 0)
-arr_switches = np.append(arr_switches, math.pi/2)
-
+arr_switches = np.append(arr_switches, math.pi / 2)
 for j in range(arr_switch_N + 1):
     t = np.arange(arr_switches[j], arr_switches[j + 1], ANGLE_STEP)
     angle_arr_A0 = np.empty(len(t))
@@ -479,7 +465,7 @@ for j in range(arr_switch_N + 1):
     if (polygonal_norm(x0[0], x0[1], h0) <
             polygonal_norm(x1[0], x1[1], h0)):
         ax4.plot(t, angle_arr_A1, 'b', linewidth=1.5)
-        angle_arr_A10 = angle_arr_A1[0]
+        ytick_pos = [0, angle_arr_A1[0], 0.5 * np.pi]
     else:
         ax4.plot(t, angle_arr_A0, 'r', linewidth=1.5)
 
@@ -487,7 +473,6 @@ for j in range(arr_switch_N + 1):
 
 xtick_pos = [0, arr_switches[1], 0.5 * np.pi]
 xlabels = [r'0', r'$\omega_0$', r'$\frac{\pi}{2}$']
-ytick_pos = [0, angle_arr_A10, 0.5 * np.pi]
 ylabels = [r'0', '', r'$\frac{\pi}{2}$']
 
 pyplot.xticks(xtick_pos, xlabels)
@@ -525,13 +510,13 @@ for i in range(LEN_TRAJECTORY):
         index_seq.append('1')
         F1 += 1
     if i > 0:
-        if ((index_seq[i-1] == '0') and (index_seq[i] == '0')):
+        if ((index_seq[i - 1] == '0') and (index_seq[i] == '0')):
             F00 += 1
-        if ((index_seq[i-1] == '0') and (index_seq[i] == '1')):
+        if ((index_seq[i - 1] == '0') and (index_seq[i] == '1')):
             F01 += 1
-        if ((index_seq[i-1] == '1') and (index_seq[i] == '0')):
+        if ((index_seq[i - 1] == '1') and (index_seq[i] == '0')):
             F10 += 1
-        if ((index_seq[i-1] == '1') and (index_seq[i] == '1')):
+        if ((index_seq[i - 1] == '1') and (index_seq[i] == '1')):
             F11 += 1
 
 print('\nExtremal index sequence: ', end='')
@@ -542,12 +527,12 @@ print('\n\nFrequences of symbols 0, 1, 00, 01 etc. in the index sequence:',
       '\n\nSymbols:       0      1      00     01     10     11')
 
 print('Frequences: ',
-      f' {round(F0/LEN_TRAJECTORY, 3):.3f}',
-      f' {round(F1/LEN_TRAJECTORY, 3):.3f}',
-      f' {round(F00/(LEN_TRAJECTORY-1), 3):.3f}',
-      f' {round(F01/(LEN_TRAJECTORY-1), 3):.3f}',
-      f' {round(F10/(LEN_TRAJECTORY-1), 3):.3f}',
-      f' {round(F11/(LEN_TRAJECTORY-1), 3):.3f}')
+      f' {round(F0 / LEN_TRAJECTORY, 3):.3f}',
+      f' {round(F1 / LEN_TRAJECTORY, 3):.3f}',
+      f' {round(F00 / (LEN_TRAJECTORY - 1), 3):.3f}',
+      f' {round(F01 / (LEN_TRAJECTORY - 1), 3):.3f}',
+      f' {round(F10 / (LEN_TRAJECTORY - 1), 3):.3f}',
+      f' {round(F11 / (LEN_TRAJECTORY - 1), 3):.3f}')
 
 t_index_seq = time.time() - t_tick
 
@@ -566,12 +551,12 @@ fig4.savefig(f'sfunc2-{ALPHA:.2f}-{AAA:.2f}-{BBB:.2f}-{BETA:.2f}-' +
 
 # Computation timing
 
-t_compute = T_BARNORM_COMP + t_index_seq
+T_COMPute = T_BARNORM_COMP + t_index_seq
 t_plot = t_plot_fig1 + t_plot_fig2 + t_plot_fig3 + t_plot_fig4
-t_total = t_ini + t_plot + t_compute
+t_total = t_ini + t_plot + T_COMPute
 
 print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
-print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
+print('Computations:   ', f'{round(T_COMPute, 6):6.2f} sec.')
 print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
 print('Total:          ', f'{round(t_total, 6):6.2f} sec.')
 
