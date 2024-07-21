@@ -72,17 +72,17 @@ def matrix_angular_coord(_a, _t):
     """
     _cos_t = math.cos(_t)
     _sin_t = math.sin(_t)
-    _vect = np.asarray([_cos_t, _sin_t])
-    _vect_transpose = np.transpose(_vect)
+    _vec_t = np.asarray([_cos_t, _sin_t])
+    _vec_t_transpose = np.transpose(_vec_t)
     _rot_back = np.asarray([[_cos_t, _sin_t], [-_sin_t, _cos_t]])
-    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vect_transpose)
+    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
 
 # Initialization
 
 t_tick = time.time()
-T_BARNORM_COMP = 0.
+t_barnorm_comp = 0.
 
 TOL = 0.0000001
 ANGLE_STEP = 0.01
@@ -151,7 +151,7 @@ while True:
 
     h0 = h0.intersection(shapely.affinity.scale(h12, xfact=rho, yfact=rho))
 
-    T_BARNORM_COMP += (time.time() - t_tick)
+    t_barnorm_comp += (time.time() - t_tick)
 
     NITER += 1
     print(f'{NITER:3.0f}.', f'{rho_min:.6f}', f'{rho:.6f}', f'{rho_max:.6f}',
@@ -225,7 +225,7 @@ for i in range(np.size(p_int[:, 0])):
                  [2 * p_int[i, 1], -2 * p_int[i, 1]],
                  dashes=[5, 2, 1, 2], color='green', linewidth=1)
 
-ax1.plot(np.NaN, np.NaN, dashes=[5, 2, 1, 2], color='green',
+ax1.plot(np.nan, np.nan, dashes=[5, 2, 1, 2], color='green',
          linewidth=1, label=r'$\|A_{0}x\|=\|A_{1}x\|$')
 
 t_plot_fig1 = time.time() - t_tick
@@ -551,12 +551,12 @@ fig4.savefig(f'sfunc2-{ALPHA:.2f}-{AAA:.2f}-{BBB:.2f}-{BETA:.2f}-' +
 
 # Computation timing
 
-T_COMPute = T_BARNORM_COMP + t_index_seq
+t_compute = t_barnorm_comp + t_index_seq
 t_plot = t_plot_fig1 + t_plot_fig2 + t_plot_fig3 + t_plot_fig4
-t_total = t_ini + t_plot + T_COMPute
+t_total = t_ini + t_plot + t_compute
 
 print('\nInitialization: ', f'{round(t_ini, 6):6.2f} sec.')
-print('Computations:   ', f'{round(T_COMPute, 6):6.2f} sec.')
+print('Computations:   ', f'{round(t_compute, 6):6.2f} sec.')
 print('Plotting:       ', f'{round(t_plot, 6):6.2f} sec.')
 print('Total:          ', f'{round(t_total, 6):6.2f} sec.')
 
