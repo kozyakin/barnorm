@@ -292,8 +292,8 @@ omega1 = (arr_switches[1] + arr_switches[2]) / 2.
 omega2 = omega1 + math.pi / 2.
 omega3 = omega2 + math.pi / 2.
 omega4 = omega3 + math.pi / 2.
-props = dict(boxstyle='round', facecolor='gainsboro', edgecolor='none',
-             alpha=0.5)
+props = {'boxstyle': 'round', 'facecolor': 'gainsboro',
+         'edgecolor': 'none', 'alpha': 0.5}
 p_label = np.array([math.cos(omega1), math.sin(omega1)])
 
 if (polygonal_norm(p_label[0], p_label[1], h10) >
