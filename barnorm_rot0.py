@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Barabanov norms for rotation matrices.
 
-Created on Sat Sep 21 12:37:46 2019.
-Last updated on Sun Jul 21 02:24:10 2024 +0300
+Created on 2019-09-21 12:37:46 +0300.
+Last updated on 2024-07-05 13:46:28 +0300
 Make compatible with Shapely v2.0
 
 @author: Victor Kozyakin
