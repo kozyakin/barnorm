@@ -73,9 +73,8 @@ def matrix_angular_coord(_a, _t):
     _cos_t = math.cos(_t)
     _sin_t = math.sin(_t)
     _vec_t = np.asarray([_cos_t, _sin_t])
-    _vec_t_transpose = np.transpose(_vec_t)
     _rot_back = np.asarray([[_cos_t, _sin_t], [-_sin_t, _cos_t]])
-    _vec_a = np.matmul(np.matmul(_rot_back, _a), _vec_t_transpose)
+    _vec_a = _rot_back @ _a @ _vec_t
     return _t + math.atan2(_vec_a[1], _vec_a[0])
 
 
@@ -134,10 +133,10 @@ while True:
 
     p0 = np.array(h0.boundary.coords)
 
-    p1 = MultiPoint(np.matmul(p0, INV_A0T))
+    p1 = MultiPoint(p0 @ INV_A0T)
     h1 = p1.convex_hull
 
-    p2 = MultiPoint(np.matmul(p0, INV_A1T))
+    p2 = MultiPoint(p0 @ INV_A1T)
     h2 = p2.convex_hull
 
     h12 = h1.intersection(h2)
@@ -267,8 +266,8 @@ else:
 
 for i in range(LEN_TRAJECTORY):
     xprev = x
-    x0 = np.matmul(x, A0T)
-    x1 = np.matmul(x, A1T)
+    x0 = x @ A0T
+    x1 = x @ A1T
     if (polygonal_norm(x0[0], x0[1], h0) >
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
@@ -376,8 +375,8 @@ for j in range(arr_switch_N + 1):
         angle_arr_A1[i] = matrix_angular_coord(A1, item)
     omega = (arr_switches[j] + arr_switches[j + 1]) / 2.
     x = np.asarray([math.cos(omega), math.sin(omega)])
-    x0 = np.matmul(x, A0T)
-    x1 = np.matmul(x, A1T)
+    x0 = x @ A0T
+    x1 = x @ A1T
     if (polygonal_norm(x0[0], x0[1], h0) <
             polygonal_norm(x1[0], x1[1], h0)):
         ax3.plot(t, angle_arr_A1, 'b', linewidth=1.5)
@@ -456,8 +455,8 @@ for j in range(arr_switch_N + 1):
         angle_arr_A1[i] = matrix_angular_coord(A1, item)
     omega = (arr_switches[j] + arr_switches[j + 1]) / 2.
     x = np.asarray([math.cos(omega), math.sin(omega)])
-    x0 = np.matmul(x, A0T)
-    x1 = np.matmul(x, A1T)
+    x0 = x @ A0T
+    x1 = x @ A1T
     if (polygonal_norm(x0[0], x0[1], h0) <
             polygonal_norm(x1[0], x1[1], h0)):
         ax4.plot(t, angle_arr_A1, 'b', linewidth=1.5)
@@ -494,8 +493,8 @@ index_seq = []
 
 for i in range(LEN_TRAJECTORY):
     x = x / polygonal_norm(x[0], x[1], h0)
-    x0 = np.matmul(x, A0T)
-    x1 = np.matmul(x, A1T)
+    x0 = x @ A0T
+    x1 = x @ A1T
     if (polygonal_norm(x0[0], x0[1], h0) >
             polygonal_norm(x1[0], x1[1], h0)):
         x = x0
