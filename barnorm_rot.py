@@ -3,7 +3,6 @@
 
 Created on 2019-09-21 12:37:46.
 Last updated on 2024-07-24 07:41:44 +0300
-Make compatible with Shapely v2.0
 
 @author: Victor Kozyakin
 """
@@ -302,29 +301,29 @@ p_label = np.array([math.cos(omega1), math.sin(omega1)])
 if (polygonal_norm(p_label[0], p_label[1], h10) >
         polygonal_norm(p_label[0], p_label[1], h20)):
     ax2.text(0.9 * bb * math.cos(omega1), 0.9 * bb * math.sin(omega1),
-             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
+             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
              fontsize='x-large', bbox=props)
     ax2.text(0.8 * bb * math.cos(omega2), 0.8 * bb * math.sin(omega2),
-             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
-             fontsize='x-large', bbox=props)
-    ax2.text(0.9 * bb * math.cos(omega3), 0.9 * bb * math.sin(omega3),
              r'$x_{n+1}=A_0x_n$', ha='center', va='center',
              fontsize='x-large', bbox=props)
-    ax2.text(0.8 * bb * math.cos(omega4), 0.8 * bb * math.sin(omega4),
+    ax2.text(0.9 * bb * math.cos(omega3), 0.9 * bb * math.sin(omega3),
              r'$x_{n+1}=A_1x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.8 * bb * math.cos(omega4), 0.8 * bb * math.sin(omega4),
+             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
              fontsize='x-large', bbox=props)
 else:
     ax2.text(0.8 * bb * math.cos(omega1), 0.8 * bb * math.sin(omega1),
-             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
+             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
              fontsize='x-large', bbox=props)
     ax2.text(0.9 * bb * math.cos(omega2), 0.9 * bb * math.sin(omega2),
-             r'$x_{n+1}=A_0x_n$', ha='center', va='center',
-             fontsize='x-large', bbox=props)
-    ax2.text(0.8 * bb * math.cos(omega3), 0.8 * bb * math.sin(omega3),
              r'$x_{n+1}=A_1x_n$', ha='center', va='center',
              fontsize='x-large', bbox=props)
-    ax2.text(0.9 * bb * math.cos(omega4), 0.9 * bb * math.sin(omega4),
+    ax2.text(0.8 * bb * math.cos(omega3), 0.8 * bb * math.sin(omega3),
              r'$x_{n+1}=A_0x_n$', ha='center', va='center',
+             fontsize='x-large', bbox=props)
+    ax2.text(0.9 * bb * math.cos(omega4), 0.9 * bb * math.sin(omega4),
+             r'$x_{n+1}=A_1x_n$', ha='center', va='center',
              fontsize='x-large', bbox=props)
 
 t_plot_fig2 = time.time() - t_tick
