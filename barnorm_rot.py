@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Barabanov norms for rotation matrices.
 
-Created on 2019-09-21 12:37:46.
-Last updated on 2024-07-24 07:41:44 +0300
+Relised on   2019-09-21 12:37:46.
+Last updated 2024-07-24 07:41:44 +0300
 
 @author: Victor Kozyakin
 """
