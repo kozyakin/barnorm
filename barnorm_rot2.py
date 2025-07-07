@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Barabanov norms.
 
-Relised on   2019-09-21 12:37:46 +0300.
+Released on  2019-09-21 12:37:46 +0300.
 Last updated 2024-07-05 13:46:28 +0300
 Make compatible with Shapely v2.0
 

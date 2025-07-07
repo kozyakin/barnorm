@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Barabanov norms for positive triangular matrices.
 
-Relised on   2019-09-21 12:37:46.
+Released on  2019-09-21 12:37:46.
 Last updated 2024-07-24 07:41:44 +0300
 Make compatible with Shapely v2.0
 
